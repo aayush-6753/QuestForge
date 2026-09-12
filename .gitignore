@@ -1,0 +1,15 @@
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+frontend/.vite-cache
+dist
+coverage
+.env
+.env.*
+!.env.example
+!frontend/.env.example
+!backend/.env.example
+*.log
+*.tsbuildinfo
+.DS_Store
+backend/prisma/migrations

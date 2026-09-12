@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum AttributeType {
+  STRENGTH
+  INTELLECT
+  DISCIPLINE
+  CREATIVITY
+  VITALITY
+}
+
+enum QuestDifficulty {
+  EASY
+  MEDIUM
+  HARD
+  EPIC
+}
+
+enum QuestStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum QuestCategory {
+  FITNESS
+  LEARNING
+  WORK
+  CREATIVE
+  WELLNESS
+  PERSONAL
+}
+
+enum RewardType {
+  COSMETIC
+  TITLE
+  THEME
+}
+
+enum RewardRarity {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+model Profile {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @unique @db.Uuid
+  displayName String?
+  timezone    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([createdAt])
+}
+
+model Character {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @unique @db.Uuid
+  level          Int       @default(1)
+  totalXp        Int       @default(0)
+  gold           Int       @default(0)
+  currentStreak  Int       @default(0)
+  longestStreak  Int       @default(0)
+  lastActiveDate DateTime? @db.Date
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([level])
+}
+
+model Attribute {
+  id        String        @id @default(uuid()) @db.Uuid
+  userId    String        @db.Uuid
+  type      AttributeType
+  xp        Int           @default(0)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@unique([userId, type])
+  @@index([userId])
+}
+
+model Quest {
+  id          String          @id @default(uuid()) @db.Uuid
+  userId      String          @db.Uuid
+  title       String
+  description String?
+  category    QuestCategory
+  difficulty  QuestDifficulty
+  status      QuestStatus     @default(ACTIVE)
+  dueAt       DateTime?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  completions QuestCompletion[]
+
+  @@index([userId, status])
+  @@index([dueAt])
+}
+
+model QuestCompletion {
+  id                 String        @id @default(uuid()) @db.Uuid
+  questId            String        @db.Uuid
+  userId             String        @db.Uuid
+  completedAt        DateTime      @default(now())
+  awardedXp          Int
+  awardedGold        Int
+  attributeType      AttributeType
+  awardedAttributeXp Int
+
+  quest Quest @relation(fields: [questId], references: [id], onDelete: Cascade)
+
+  @@index([userId, completedAt])
+  @@index([questId])
+}
+
+model RewardItem {
+  id          String       @id @default(uuid()) @db.Uuid
+  slug        String       @unique
+  name        String
+  description String
+  type        RewardType
+  priceGold   Int
+  rarity      RewardRarity
+  assetKey    String?
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  inventoryItems InventoryItem[]
+
+  @@index([isActive, rarity])
+}
+
+model InventoryItem {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid
+  rewardItemId String   @db.Uuid
+  purchasedAt  DateTime @default(now())
+
+  rewardItem RewardItem @relation(fields: [rewardItemId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, rewardItemId])
+  @@index([userId])
+}
+
+model ActivityEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  type      String
+  metadata  Json
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([type])
+}

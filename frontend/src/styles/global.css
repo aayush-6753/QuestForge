@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: theme("fontFamily.body");
+  background: #161412;
+  color: #fbf3dc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background:
+    linear-gradient(rgba(22, 20, 18, 0.94), rgba(22, 20, 18, 0.9)),
+    radial-gradient(circle at 20% 0%, rgba(213, 157, 67, 0.18), transparent 34%),
+    radial-gradient(circle at 80% 8%, rgba(77, 120, 183, 0.15), transparent 30%),
+    #161412;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(90deg, rgba(251, 243, 220, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(251, 243, 220, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid #d59d43;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
