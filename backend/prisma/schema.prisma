@@ -9,157 +9,225 @@ datasource db {
 }
 
 enum AttributeType {
-  STRENGTH
-  INTELLECT
-  DISCIPLINE
-  CREATIVITY
-  VITALITY
+  STRENGTH   @map("strength")
+  INTELLECT  @map("intellect")
+  DISCIPLINE @map("discipline")
+  CREATIVITY @map("creativity")
+  VITALITY   @map("vitality")
+
+  @@map("attribute_type")
 }
 
 enum QuestDifficulty {
-  EASY
-  MEDIUM
-  HARD
-  EPIC
+  EASY   @map("easy")
+  MEDIUM @map("medium")
+  HARD   @map("hard")
+  EPIC   @map("epic")
+
+  @@map("quest_difficulty")
 }
 
 enum QuestStatus {
-  ACTIVE
-  COMPLETED
-  ARCHIVED
+  ACTIVE    @map("active")
+  COMPLETED @map("completed")
+  ARCHIVED  @map("archived")
+
+  @@map("quest_status")
 }
 
 enum QuestCategory {
-  FITNESS
-  LEARNING
-  WORK
-  CREATIVE
-  WELLNESS
-  PERSONAL
+  FITNESS  @map("fitness")
+  LEARNING @map("learning")
+  WORK     @map("work")
+  CREATIVE @map("creative")
+  WELLNESS @map("wellness")
+  PERSONAL @map("personal")
+
+  @@map("quest_category")
+}
+
+enum QuestRecurrence {
+  NONE    @map("none")
+  DAILY   @map("daily")
+  WEEKLY  @map("weekly")
+  MONTHLY @map("monthly")
+
+  @@map("quest_recurrence")
 }
 
 enum RewardType {
-  COSMETIC
-  TITLE
-  THEME
+  COSMETIC @map("cosmetic")
+  TITLE    @map("title")
+  THEME    @map("theme")
+  BADGE    @map("badge")
+
+  @@map("reward_type")
 }
 
 enum RewardRarity {
-  COMMON
-  RARE
-  EPIC
-  LEGENDARY
+  COMMON    @map("common")
+  RARE      @map("rare")
+  EPIC      @map("epic")
+  LEGENDARY @map("legendary")
+
+  @@map("reward_rarity")
+}
+
+enum ActivityEventType {
+  QUEST_CREATED    @map("quest_created")
+  QUEST_COMPLETED  @map("quest_completed")
+  QUEST_ARCHIVED   @map("quest_archived")
+  LEVEL_UP         @map("level_up")
+  STREAK_UPDATED   @map("streak_updated")
+  REWARD_PURCHASED @map("reward_purchased")
+  REWARD_EQUIPPED  @map("reward_equipped")
+
+  @@map("activity_event_type")
 }
 
 model Profile {
-  id          String   @id @default(uuid()) @db.Uuid
-  userId      String   @unique @db.Uuid
-  displayName String?
-  timezone    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @unique @map("user_id") @db.Uuid
+  displayName String?  @map("display_name")
+  avatarKey   String?  @map("avatar_key")
+  title       String?
+  timezone    String   @default("UTC")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  character        Character?
+  attributes       Attribute[]
+  quests           Quest[]
+  questCompletions QuestCompletion[]
+  inventoryItems   InventoryItem[]
+  activityEvents   ActivityEvent[]
 
   @@index([createdAt])
+  @@map("profiles")
 }
 
 model Character {
-  id             String    @id @default(uuid()) @db.Uuid
-  userId         String    @unique @db.Uuid
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String    @unique @map("user_id") @db.Uuid
   level          Int       @default(1)
-  totalXp        Int       @default(0)
+  totalXp        Int       @default(0) @map("total_xp")
   gold           Int       @default(0)
-  currentStreak  Int       @default(0)
-  longestStreak  Int       @default(0)
-  lastActiveDate DateTime? @db.Date
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  currentStreak  Int       @default(0) @map("current_streak")
+  longestStreak  Int       @default(0) @map("longest_streak")
+  lastActiveDate DateTime? @map("last_active_date") @db.Date
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  profile Profile @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   @@index([level])
+  @@map("characters")
 }
 
 model Attribute {
-  id        String        @id @default(uuid()) @db.Uuid
-  userId    String        @db.Uuid
+  id        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String        @map("user_id") @db.Uuid
   type      AttributeType
+  level     Int           @default(1)
   xp        Int           @default(0)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  createdAt DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  profile Profile @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   @@unique([userId, type])
-  @@index([userId])
+  @@map("attributes")
 }
 
 model Quest {
-  id          String          @id @default(uuid()) @db.Uuid
-  userId      String          @db.Uuid
-  title       String
-  description String?
-  category    QuestCategory
-  difficulty  QuestDifficulty
-  status      QuestStatus     @default(ACTIVE)
-  dueAt       DateTime?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String          @map("user_id") @db.Uuid
+  title           String
+  description     String?
+  category        QuestCategory
+  difficulty      QuestDifficulty
+  targetAttribute AttributeType   @map("target_attribute")
+  status          QuestStatus     @default(ACTIVE)
+  recurrence      QuestRecurrence @default(NONE)
+  baseXp          Int             @default(10) @map("base_xp")
+  baseGold        Int             @default(5) @map("base_gold")
+  dueAt           DateTime?       @map("due_at") @db.Timestamptz(3)
+  completedAt     DateTime?       @map("completed_at") @db.Timestamptz(3)
+  createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
 
+  profile     Profile           @relation(fields: [userId], references: [userId], onDelete: Cascade)
   completions QuestCompletion[]
 
-  @@index([userId, status])
-  @@index([dueAt])
+  @@index([userId, status, dueAt])
+  @@index([userId, category])
+  @@map("quests")
 }
 
 model QuestCompletion {
-  id                 String        @id @default(uuid()) @db.Uuid
-  questId            String        @db.Uuid
-  userId             String        @db.Uuid
-  completedAt        DateTime      @default(now())
-  awardedXp          Int
-  awardedGold        Int
-  attributeType      AttributeType
-  awardedAttributeXp Int
+  id                 String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  questId            String        @map("quest_id") @db.Uuid
+  userId             String        @map("user_id") @db.Uuid
+  completedAt        DateTime      @default(now()) @map("completed_at") @db.Timestamptz(3)
+  awardedXp          Int           @map("awarded_xp")
+  awardedGold        Int           @map("awarded_gold")
+  attributeType      AttributeType @map("attribute_type")
+  awardedAttributeXp Int           @map("awarded_attribute_xp")
 
-  quest Quest @relation(fields: [questId], references: [id], onDelete: Cascade)
+  quest   Quest   @relation(fields: [questId], references: [id], onDelete: Cascade)
+  profile Profile @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   @@index([userId, completedAt])
   @@index([questId])
+  @@map("quest_completions")
 }
 
 model RewardItem {
-  id          String       @id @default(uuid()) @db.Uuid
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   slug        String       @unique
   name        String
   description String
   type        RewardType
-  priceGold   Int
+  priceGold   Int          @map("price_gold")
   rarity      RewardRarity
-  assetKey    String?
-  isActive    Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  assetKey    String?      @map("asset_key")
+  metadata    Json?
+  isActive    Boolean      @default(true) @map("is_active")
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
 
   inventoryItems InventoryItem[]
 
   @@index([isActive, rarity])
+  @@map("reward_items")
 }
 
 model InventoryItem {
-  id           String   @id @default(uuid()) @db.Uuid
-  userId       String   @db.Uuid
-  rewardItemId String   @db.Uuid
-  purchasedAt  DateTime @default(now())
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String    @map("user_id") @db.Uuid
+  rewardItemId String    @map("reward_item_id") @db.Uuid
+  isEquipped   Boolean   @default(false) @map("is_equipped")
+  purchasedAt  DateTime  @default(now()) @map("purchased_at") @db.Timestamptz(3)
+  equippedAt   DateTime? @map("equipped_at") @db.Timestamptz(3)
 
+  profile    Profile    @relation(fields: [userId], references: [userId], onDelete: Cascade)
   rewardItem RewardItem @relation(fields: [rewardItemId], references: [id], onDelete: Restrict)
 
   @@unique([userId, rewardItemId])
-  @@index([userId])
+  @@index([rewardItemId])
+  @@map("inventory_items")
 }
 
 model ActivityEvent {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @db.Uuid
-  type      String
-  metadata  Json
-  createdAt DateTime @default(now())
+  id        String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String            @map("user_id") @db.Uuid
+  type      ActivityEventType
+  metadata  Json?
+  createdAt DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  profile Profile @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   @@index([userId, createdAt])
-  @@index([type])
+  @@index([userId, type, createdAt])
+  @@map("activity_events")
 }
