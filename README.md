@@ -94,7 +94,7 @@ Backend, in `backend/.env`:
 - `DIRECT_URL`
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
-- `CLIENT_ORIGIN`
+- `CLIENT_ORIGINS` comma-separated allowed frontend origins
 
 ## Database Migration
 
@@ -102,6 +102,12 @@ Backend, in `backend/.env`:
 npm run db:generate
 npm run db:migrate
 npm run db:seed
+```
+
+For hosted or shared databases, apply committed migrations with:
+
+```bash
+npm run db:deploy
 ```
 
 ## Running Locally
@@ -125,6 +131,7 @@ API health: `http://localhost:3001/api/health`
 - `npm run test`
 - `npm run db:generate`
 - `npm run db:migrate`
+- `npm run db:deploy`
 - `npm run db:seed`
 
 ## API Overview
@@ -161,7 +168,9 @@ Implemented:
 - shared API client with bearer token attachment
 - Express API with security middleware
 - request IDs and centralized errors
-- Prisma schema and seed foundation
+- Prisma schema, committed baseline migration, and seed foundation
+- RLS-enabled gameplay tables with Supabase Data API access revoked
+- local CORS support for Vite dev ports `5173` and `5174`
 - idempotent `GET /api/v1/me`
 - responsive RPG dashboard shell
 - lint, typecheck, build, and test scripts
@@ -192,3 +201,11 @@ Not implemented yet:
 ## Deployment Notes
 
 Deploy the client and server separately. Set Vite variables only for public client configuration. Keep database URLs and future server-only secrets out of frontend bundles.
+
+Deployment checklist:
+
+1. Set frontend `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and `VITE_API_BASE_URL`.
+2. Set backend `DATABASE_URL`, `DIRECT_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `CLIENT_ORIGINS`.
+3. Run `npm run db:deploy`.
+4. Run `npm run db:seed`.
+5. Start the backend with `npm --workspace backend run start` after `npm run build`.

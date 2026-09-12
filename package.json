@@ -17,6 +17,7 @@
     "test": "npm --workspaces run test",
     "db:generate": "npm --workspace backend run db:generate",
     "db:migrate": "npm --workspace backend run db:migrate",
+    "db:deploy": "npm --workspace backend run db:deploy",
     "db:seed": "npm --workspace backend run db:seed"
   },
   "devDependencies": {
