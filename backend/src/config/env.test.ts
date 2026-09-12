@@ -9,4 +9,24 @@ describe("loadEnv", () => {
   it("provides safe defaults in test mode", () => {
     expect(loadEnv({ NODE_ENV: "test" }).PORT).toBe(3001);
   });
+
+  it("allows both common Vite dev origins in test mode", () => {
+    expect(loadEnv({ NODE_ENV: "test" }).CLIENT_ORIGINS).toEqual([
+      "http://localhost:5173",
+      "http://localhost:5174",
+    ]);
+  });
+
+  it("accepts comma-separated client origins", () => {
+    expect(
+      loadEnv({
+        NODE_ENV: "test",
+        CLIENT_ORIGINS: "http://localhost:5173, http://localhost:4173",
+      }).CLIENT_ORIGINS,
+    ).toEqual(["http://localhost:5173", "http://localhost:4173"]);
+  });
+
+  it("rejects invalid client origins", () => {
+    expect(() => loadEnv({ NODE_ENV: "test", CLIENT_ORIGINS: "not-a-url" })).toThrow("CLIENT_ORIGINS");
+  });
 });

@@ -12,6 +12,12 @@ describe("api base", () => {
     expect(response.body).toEqual({ data: { status: "ok" } });
   });
 
+  it("allows the Vite fallback dev origin", async () => {
+    const response = await request(app).get("/api/health").set("Origin", "http://localhost:5174");
+
+    expect(response.headers["access-control-allow-origin"]).toBe("http://localhost:5174");
+  });
+
   it("rejects protected routes without a bearer token", async () => {
     const response = await request(app).get("/api/v1/me");
 
