@@ -21,7 +21,9 @@ export function AttributeCard({ attribute }: { attribute: CharacterAttribute }) 
   return (
     <article className={cn("rounded-lg border p-4", attributeStyles[attribute.type])}>
       <h3 className="font-display text-lg text-vellum">{labels[attribute.type]}</h3>
-      <p className="mt-2 text-sm text-parchment/75">{attribute.xp} attribute XP</p>
+      <p className="mt-2 text-sm text-parchment/75">
+        Level {attribute.level} - {attribute.xp} attribute XP
+      </p>
     </article>
   );
 }

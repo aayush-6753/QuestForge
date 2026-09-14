@@ -4,16 +4,8 @@ import { prisma } from "../../lib/prisma.js";
 import { requireAuth } from "../../middleware/auth.js";
 import { sendSuccess } from "../../utils/api-response.js";
 import { requireAuthContext, validateRequest } from "../../utils/validate.js";
+import { isValidTimezone } from "../streaks/streak.rules.js";
 import { getOrCreateUserFoundation, updateUserProfile } from "./me.service.js";
-
-function isValidTimezone(timezone: string) {
-  try {
-    new Intl.DateTimeFormat("en-US", { timeZone: timezone });
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 const updateProfileSchema = z
   .object({

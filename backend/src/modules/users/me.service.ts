@@ -1,4 +1,5 @@
 import { AttributeType, type Prisma, type PrismaClient } from "@prisma/client";
+import { ATTRIBUTE_XP_STEP, progressionForXp } from "../progression/progression.rules.js";
 
 const attributeTypes = [
   AttributeType.STRENGTH,
@@ -12,6 +13,16 @@ export type UpdateProfileInput = {
   displayName?: string | null;
   timezone?: string;
 };
+
+function foundationProgression(character: { totalXp: number }, attributes: Array<{ type: AttributeType; xp: number }>) {
+  return {
+    character: progressionForXp(character.totalXp),
+    attributes: attributes.map((attribute) => ({
+      type: attribute.type,
+      ...progressionForXp(attribute.xp, ATTRIBUTE_XP_STEP),
+    })),
+  };
+}
 
 export async function ensureUserFoundation(tx: Prisma.TransactionClient, userId: string) {
   const profile = await tx.profile.upsert({
@@ -46,6 +57,7 @@ export async function getOrCreateUserFoundation(prisma: PrismaClient, userId: st
       profile,
       character,
       attributes,
+      progression: foundationProgression(character, attributes),
     };
   });
 }
@@ -59,6 +71,6 @@ export async function updateUserProfile(prisma: PrismaClient, userId: string, da
       orderBy: { type: "asc" },
     });
 
-    return { profile, character, attributes };
+    return { profile, character, attributes, progression: foundationProgression(character, attributes) };
   });
 }

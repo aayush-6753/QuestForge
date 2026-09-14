@@ -137,7 +137,7 @@ API health: `http://localhost:3001/api/health`
 ## API Overview
 
 - `GET /api/health` verifies PostgreSQL and returns `{ "data": { "status": "ok", "database": "ok" } }`.
-- `GET /api/v1/me` requires a Supabase bearer token. It idempotently creates and returns the user profile, character, and attributes.
+- `GET /api/v1/me` requires a Supabase bearer token. It idempotently creates and returns the user foundation with character and attribute progression summaries.
 - `PATCH /api/v1/me` updates the authenticated user's nullable display name and IANA timezone.
 
 Errors use:

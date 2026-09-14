@@ -36,6 +36,17 @@ describe("PATCH /api/v1/me", () => {
       profile: { userId, displayName: "Aayush", timezone: "Asia/Kolkata" },
       character: { userId, level: 1 },
       attributes: [],
+      progression: {
+        character: {
+          level: 1,
+          currentLevelStartXp: 0,
+          nextLevelThreshold: 100,
+          xpWithinLevel: 0,
+          xpRequiredForNextLevel: 100,
+          percentage: 0,
+        },
+        attributes: [],
+      },
     });
   });
 

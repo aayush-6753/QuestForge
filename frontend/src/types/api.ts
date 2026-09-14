@@ -4,7 +4,7 @@ export type Profile = {
   id: string;
   userId: string;
   displayName: string | null;
-  timezone: string | null;
+  timezone: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -26,13 +26,27 @@ export type CharacterAttribute = {
   id: string;
   userId: string;
   type: AttributeType;
+  level: number;
   xp: number;
   createdAt: string;
   updatedAt: string;
+};
+
+export type ProgressionSummary = {
+  level: number;
+  currentLevelStartXp: number;
+  nextLevelThreshold: number;
+  xpWithinLevel: number;
+  xpRequiredForNextLevel: number;
+  percentage: number;
 };
 
 export type MeResponse = {
   profile: Profile;
   character: Character;
   attributes: CharacterAttribute[];
+  progression: {
+    character: ProgressionSummary;
+    attributes: Array<ProgressionSummary & { type: AttributeType }>;
+  };
 };

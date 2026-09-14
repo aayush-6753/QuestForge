@@ -1,9 +1,17 @@
-import type { Character, Profile } from "../../types/api";
+import type { Character, Profile, ProgressionSummary } from "../../types/api";
 import { GoldCounter } from "./GoldCounter";
 import { StreakIndicator } from "./StreakIndicator";
 import { XPProgressBar } from "./XPProgressBar";
 
-export function CharacterCard({ character, profile }: { character: Character; profile: Profile }) {
+export function CharacterCard({
+  character,
+  profile,
+  progression,
+}: {
+  character: Character;
+  profile: Profile;
+  progression: ProgressionSummary;
+}) {
   return (
     <section className="rounded-lg border border-vellum/10 bg-coal/90 p-5 shadow-glow">
       <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
@@ -20,7 +28,7 @@ export function CharacterCard({ character, profile }: { character: Character; pr
         </div>
       </div>
       <div className="mt-6">
-        <XPProgressBar totalXp={character.totalXp} />
+        <XPProgressBar progression={progression} />
       </div>
     </section>
   );

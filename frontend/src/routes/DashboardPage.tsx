@@ -42,7 +42,7 @@ export function DashboardPage() {
   return (
     <AppShell>
       <PageContainer className="grid gap-5">
-        <CharacterCard character={data.character} profile={data.profile} />
+        <CharacterCard character={data.character} profile={data.profile} progression={data.progression.character} />
 
         <div className="grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
           <QuestBoard />

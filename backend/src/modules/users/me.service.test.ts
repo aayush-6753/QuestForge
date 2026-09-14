@@ -7,8 +7,8 @@ describe("updateUserProfile", () => {
     const userId = "52d2f4c8-f48e-4ccf-a08e-8187cd923bb3";
     const profile = { userId, displayName: "Aayush", timezone: "Asia/Kolkata" };
     const update = { displayName: "Aayush", timezone: "Asia/Kolkata" };
-    const character = { userId, level: 1 };
-    const attributes = [{ userId, type: "STRENGTH" }];
+    const character = { userId, level: 1, totalXp: 0 };
+    const attributes = [{ userId, type: "STRENGTH", level: 1, xp: 0 }];
     const tx = {
       profile: {
         upsert: vi.fn().mockResolvedValue({ userId }),
@@ -35,6 +35,31 @@ describe("updateUserProfile", () => {
       skipDuplicates: true,
     });
     expect(tx.profile.update).toHaveBeenCalledWith({ where: { userId }, data: update });
-    expect(result).toEqual({ profile, character, attributes });
+    expect(result).toEqual({
+      profile,
+      character,
+      attributes,
+      progression: {
+        character: {
+          level: 1,
+          currentLevelStartXp: 0,
+          nextLevelThreshold: 100,
+          xpWithinLevel: 0,
+          xpRequiredForNextLevel: 100,
+          percentage: 0,
+        },
+        attributes: [
+          {
+            type: "STRENGTH",
+            level: 1,
+            currentLevelStartXp: 0,
+            nextLevelThreshold: 50,
+            xpWithinLevel: 0,
+            xpRequiredForNextLevel: 50,
+            percentage: 0,
+          },
+        ],
+      },
+    });
   });
 });
