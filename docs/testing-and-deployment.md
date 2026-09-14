@@ -50,6 +50,8 @@ Backend values:
 - `DIRECT_URL`: direct or session-mode URL used by migrations.
 - `SUPABASE_URL` and `SUPABASE_ANON_KEY`: the same project used by the frontend.
 - `CLIENT_ORIGINS`: exact deployed frontend origin, without a trailing slash.
+  The Blueprint defaults to `https://life-rpg-frontend.onrender.com`; change it
+  if Render assigns a different frontend URL.
 
 Frontend values:
 
