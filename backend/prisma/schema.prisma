@@ -156,9 +156,10 @@ model Quest {
   createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt       DateTime        @updatedAt @map("updated_at") @db.Timestamptz(3)
 
-  profile     Profile           @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  completions QuestCompletion[]
+  profile    Profile          @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  completion QuestCompletion?
 
+  @@unique([id, userId])
   @@index([userId, status, dueAt])
   @@index([userId, category])
   @@map("quests")
@@ -174,9 +175,10 @@ model QuestCompletion {
   attributeType      AttributeType @map("attribute_type")
   awardedAttributeXp Int           @map("awarded_attribute_xp")
 
-  quest   Quest   @relation(fields: [questId], references: [id], onDelete: Cascade)
+  quest   Quest   @relation(fields: [questId, userId], references: [id, userId], onDelete: Cascade)
   profile Profile @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
+  @@unique([questId, userId])
   @@index([userId, completedAt])
   @@index([questId])
   @@map("quest_completions")
