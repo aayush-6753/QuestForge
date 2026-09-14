@@ -25,7 +25,7 @@ describe("requireAuth", () => {
   });
 
   it("stores the verified Supabase user on the request", async () => {
-    const req = createRequest("Bearer valid-token");
+    const req = createRequest("bEaReR valid-token");
     const next = vi.fn();
 
     getUserMock.mockResolvedValue({
@@ -48,17 +48,31 @@ describe("requireAuth", () => {
     expect(next).toHaveBeenCalledWith();
   });
 
-  it("rejects invalid tokens", async () => {
-    const req = createRequest("Bearer bad-token");
+  it.each([undefined, "", "Basic token", "Bearer", "Bearer token extra"])(
+    "rejects a missing or malformed authorization header: %s",
+    async (authorization) => {
+      const req = createRequest(authorization);
+      const next = vi.fn();
+
+      await requireAuth(req, {} as Response, next);
+
+      expect(getUserMock).not.toHaveBeenCalled();
+      expect(next).toHaveBeenCalledWith(expect.objectContaining({ statusCode: 401, code: "UNAUTHORIZED" }));
+    },
+  );
+
+  it("rejects expired tokens", async () => {
+    const req = createRequest("Bearer expired-token");
     const next = vi.fn();
 
     getUserMock.mockResolvedValue({
       data: { user: null },
-      error: new Error("invalid"),
+      error: new Error("token is expired"),
     });
 
     await requireAuth(req, {} as Response, next);
 
+    expect(getUserMock).toHaveBeenCalledWith("expired-token");
     expect(next).toHaveBeenCalledWith(expect.objectContaining({ statusCode: 401, code: "UNAUTHORIZED" }));
   });
 });

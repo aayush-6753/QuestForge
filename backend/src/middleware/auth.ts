@@ -5,9 +5,9 @@ import { ApiError } from "../utils/api-error.js";
 export async function requireAuth(req: Request, _res: Response, next: NextFunction) {
   try {
     const authorization = req.header("authorization");
-    const [scheme, token] = authorization?.split(" ") ?? [];
+    const token = authorization?.match(/^Bearer +(\S+)$/i)?.[1];
 
-    if (scheme !== "Bearer" || !token) {
+    if (!token) {
       throw new ApiError(401, "UNAUTHORIZED", "Missing bearer token.");
     }
 
