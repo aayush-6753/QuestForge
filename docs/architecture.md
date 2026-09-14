@@ -25,4 +25,7 @@ Life RPG uses Supabase Auth for identity and an Express API for all gameplay sta
 
 - `GET /api/v1/me` bootstraps and returns a profile, character, five attributes, and server-calculated progression summaries.
 - `PATCH /api/v1/me` updates the verified user's nullable display name and validated IANA timezone.
+- `/api/v1/quests` provides authenticated, ownership-scoped CRUD for one-time quests. Reward snapshots and target attributes are derived by the backend.
+- Quest creation and archival write their activity events in the same database transaction.
+- `POST /api/v1/quests/:questId/complete` locks character, quest, and attribute rows in a consistent order before atomically persisting completion, progression, streak, and activity changes.
 - The frontend uses Supabase directly only for session operations; both profile endpoints run through Express.

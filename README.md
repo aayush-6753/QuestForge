@@ -139,6 +139,12 @@ API health: `http://localhost:3001/api/health`
 - `GET /api/health` verifies PostgreSQL and returns `{ "data": { "status": "ok", "database": "ok" } }`.
 - `GET /api/v1/me` requires a Supabase bearer token. It idempotently creates and returns the user foundation with character and attribute progression summaries.
 - `PATCH /api/v1/me` updates the authenticated user's nullable display name and IANA timezone.
+- `GET /api/v1/quests` lists owned quests and optionally filters by `ACTIVE`, `COMPLETED`, or `ARCHIVED` status.
+- `POST /api/v1/quests` creates a one-time quest with server-derived XP, gold, and target attribute.
+- `GET /api/v1/quests/:questId` returns one owned quest.
+- `PATCH /api/v1/quests/:questId` updates editable fields on an active owned quest and recalculates authoritative values.
+- `DELETE /api/v1/quests/:questId` archives an active owned quest.
+- `POST /api/v1/quests/:questId/complete` permanently completes an active owned quest and atomically awards XP, gold, attribute XP, levels, streak progress, and activity events.
 
 Errors use:
 
@@ -178,14 +184,18 @@ Implemented:
 - nonlinear character and attribute progression summaries
 - timezone-aware streak rules
 - backend-driven character and attribute XP displays
+- owned one-time quest CRUD with strict intent-only validation
+- server-derived quest XP, gold, and target attributes
+- query-backed quest board with create, edit, filter, retry, and archive workflows
+- atomic quest creation/archive activity events
+- exactly-once transactional quest completion with row locking and rollback protection
+- completion reward, level-up, attribute, and streak feedback in the quest board
 - responsive RPG dashboard shell
 - frontend environment, auth, API, profile, and progression tests
 - lint, typecheck, build, and test scripts
 
 Not implemented yet:
 
-- quest CRUD
-- quest completion
 - gold economy
 - reward purchasing
 - inventory equipment
@@ -198,12 +208,10 @@ Not implemented yet:
 
 The detailed backend and frontend execution plan is in [docs/full-stack-completion-plan.md](docs/full-stack-completion-plan.md).
 
-1. Quest CRUD with server-side ownership checks.
-2. Transactional quest completion awarding XP, gold, attributes, streak updates, and activity events.
-3. Shop listing and transactional purchases.
-4. Inventory and cosmetic equipment.
-5. Progression history and activity timeline.
-6. Deployment hardening and observability.
+1. Progression history and activity timeline.
+2. Shop listing and transactional purchases.
+3. Inventory and cosmetic equipment.
+4. Deployment hardening and observability.
 
 ## Deployment Notes
 

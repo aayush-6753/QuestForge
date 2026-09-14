@@ -37,16 +37,16 @@ The frontend owns presentation, forms, navigation, and request state. The backen
 | 1. Database integrity | Complete | Contract aligned | Complete |
 | 2. Auth and profile | Implemented; live-token smoke check remains | Complete | Needs external verification |
 | 3. Progression and streak rules | Complete | Complete | Complete |
-| 4. Quest CRUD | Not started | Placeholder only | Next |
-| 5. Quest completion | Not started | Not started | Pending |
-| 6. Activity history | Not started | Placeholder only | Pending |
+| 4. Quest CRUD | Complete | Complete | Complete |
+| 5. Quest completion | Complete | Complete | Complete |
+| 6. Activity history | Not started | Placeholder only | Next |
 | 7. Rewards and inventory | Not started | Placeholder only | Pending |
 | 8. Hardening | Partial | Partial | Pending |
 | 9. Integration and E2E tests | Not started | Not started | Pending |
 | 10. Deployment | Not started | Not started | Pending |
 | 11. Demo and documentation | Partial | Partial | Pending |
 
-## Completed Frontend Foundation Through Phase 3
+## Completed Frontend Foundation Through Phase 5
 
 - Validated, fail-fast Vite configuration with test-only defaults.
 - Supabase session provider, login, signup, logout, and protected routing.
@@ -57,6 +57,11 @@ The frontend owns presentation, forms, navigation, and request state. The backen
 - Query-cache synchronization after profile updates.
 - Character and attribute progress bars driven by backend progression summaries.
 - Responsive dashboard shell and focused frontend tests for environment, auth, API, profile, and progression behavior.
+- Query-backed quest board with active, completed, and archived filters.
+- Quest creation and editing forms with due-date validation and server-authoritative reward display.
+- Archive confirmation, mutation states, query retries, and status-specific empty states.
+- Permanent quest completion with guarded pending states and conflict-aware cache reconciliation.
+- Server-authored reward, character level, attribute level, and streak feedback after completion.
 
 ## Phase 0: Production Runtime Foundation
 
@@ -285,4 +290,4 @@ The core vertical slice is complete after Phase 5. The hackathon base is complet
 
 ## Next Phase
 
-Phase 4: implement owned quest CRUD in the backend and replace the frontend quest placeholder with the real quest board and forms.
+Phase 6: expose private activity history in the backend and replace the frontend activity placeholder with a persistent timeline.

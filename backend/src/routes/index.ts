@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../lib/prisma.js";
+import { questRouter } from "../modules/quests/quest.routes.js";
 import { meRouter } from "../modules/users/me.routes.js";
 import { ApiError } from "../utils/api-error.js";
 import { sendSuccess } from "../utils/api-response.js";
@@ -16,3 +17,4 @@ apiRouter.get("/health", async (_req, res, next) => {
 });
 
 apiRouter.use("/v1/me", meRouter);
+apiRouter.use("/v1/quests", questRouter);
