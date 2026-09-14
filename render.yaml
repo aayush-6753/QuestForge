@@ -5,7 +5,7 @@ services:
     region: singapore
     plan: free
     autoDeployTrigger: "off"
-    buildCommand: npm ci && npm run db:generate && npm --workspace backend run build
+    buildCommand: npm ci && npm --workspace backend run build
     startCommand: npm --workspace backend run start
     healthCheckPath: /api/health
     envVars:
