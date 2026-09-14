@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Coins, Flame, Sparkles, Trophy, X } from "lucide-react";
 import type { CompleteQuestResponse } from "../../types/api";
 import { Button } from "../ui/Button";
@@ -9,12 +9,13 @@ function label(value: string) {
 }
 
 export function CompletionFeedback({ result, onDismiss }: { result: CompleteQuestResponse; onDismiss: () => void }) {
+  const reduceMotion = useReducedMotion();
   const characterLevel = result.progression.character.current.level;
   const attributeLevel = result.progression.attribute.current.level;
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: -8 }}
+      initial={reduceMotion ? false : { opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       className="border-y border-emerald/40 bg-emerald/10 px-4 py-5"
       role="status"
@@ -63,12 +64,12 @@ export function CompletionFeedback({ result, onDismiss }: { result: CompleteQues
 
       <div className="mt-3 grid gap-1">
         {result.progression.character.levelsGained > 0 ? (
-          <motion.p initial={{ scale: 0.96 }} animate={{ scale: 1 }} className="font-display text-lg text-citrine">
+          <motion.p initial={reduceMotion ? false : { scale: 0.96 }} animate={{ scale: 1 }} className="font-display text-lg text-citrine">
             Level up: {result.progression.character.previous.level} to {characterLevel}
           </motion.p>
         ) : null}
         {result.progression.attribute.levelsGained > 0 ? (
-          <motion.p initial={{ scale: 0.96 }} animate={{ scale: 1 }} className="font-display text-base text-amethyst">
+          <motion.p initial={reduceMotion ? false : { scale: 0.96 }} animate={{ scale: 1 }} className="font-display text-base text-amethyst">
             {label(result.progression.attribute.type)} level up: {result.progression.attribute.previous.level} to {attributeLevel}
           </motion.p>
         ) : null}

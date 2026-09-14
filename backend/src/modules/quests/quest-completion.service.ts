@@ -131,6 +131,7 @@ export async function completeQuest(prisma: PrismaClient, userId: string, questI
           type: ActivityEventType.QUEST_COMPLETED,
           metadata: {
             questId,
+            questTitle: quest.title,
             awardedXp: quest.baseXp,
             awardedGold: quest.baseGold,
             attributeType: quest.targetAttribute,

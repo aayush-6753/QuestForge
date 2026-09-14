@@ -24,7 +24,9 @@ export function CharacterCard({
           <h2 className="mt-1 font-display text-3xl text-vellum">
             {profile.displayName ?? "Unnamed Adventurer"}
           </h2>
-          <p className="mt-2 text-parchment/70">Level {progression.level} seeker of better days.</p>
+          <p className="mt-2 text-parchment/70">
+            Level {progression.level} {profile.title ?? "seeker of better days"}.
+          </p>
         </div>
         <div className="grid gap-3">
           <div className="flex flex-wrap gap-3">

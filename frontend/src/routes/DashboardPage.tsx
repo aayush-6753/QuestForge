@@ -1,10 +1,11 @@
-import { Store, WandSparkles } from "lucide-react";
 import { useState } from "react";
+import { ActivityTimeline } from "../components/activity/ActivityTimeline";
 import { AppShell } from "../components/layout/AppShell";
 import { AttributeCard } from "../components/game/AttributeCard";
 import { CharacterCard } from "../components/game/CharacterCard";
 import { ProfileEditor } from "../components/profile/ProfileEditor";
 import { QuestBoard } from "../components/quests/QuestBoard";
+import { RewardShop } from "../components/rewards/RewardShop";
 import { ErrorState } from "../components/ui/ErrorState";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
 import { PageContainer } from "../components/ui/PageContainer";
@@ -72,33 +73,9 @@ export function DashboardPage() {
           </section>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          <section id="activity" className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
-            <div className="flex items-start gap-3">
-              <WandSparkles className="mt-1 h-6 w-6 text-amethyst" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-bold uppercase text-ember">Recent activity</p>
-                <h2 className="font-display text-2xl text-vellum">No entries yet</h2>
-                <p className="mt-2 text-sm leading-6 text-parchment/70">
-                  Quest completions and progression history will appear here once those systems are implemented.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section id="shop" className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
-            <div className="flex items-start gap-3">
-              <Store className="mt-1 h-6 w-6 text-emerald" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-bold uppercase text-ember">Shop</p>
-                <h2 className="font-display text-2xl text-vellum">Rewards locked</h2>
-                <p className="mt-2 text-sm leading-6 text-parchment/70">
-                  Cosmetic rewards are modeled in the database, but purchasing stays disabled until transactional rules
-                  are built.
-                </p>
-              </div>
-            </div>
-          </section>
+        <div className="grid items-start gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+          <ActivityTimeline />
+          <RewardShop gold={data.character.gold} />
         </div>
       </PageContainer>
     </AppShell>

@@ -46,6 +46,9 @@ export async function apiRequest<T>(path: string, init: RequestInit = {}): Promi
   const body = (await response.json().catch(() => ({}))) as ApiSuccess<T> & ApiErrorBody;
 
   if (!response.ok) {
+    if (response.status === 401 && session) {
+      await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+    }
     throw new ApiClientError(
       response.status,
       body.error?.code ?? "API_ERROR",

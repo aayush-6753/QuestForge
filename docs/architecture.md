@@ -16,7 +16,7 @@ Life RPG uses Supabase Auth for identity and an Express API for all gameplay sta
 - Backend determines authenticated user.
 - Never trust `userId` from request bodies or query strings.
 - XP, gold, level, streak, reward price, inventory, and quest completion changes are server controlled.
-- Purchases and quest completions must become transactional when implemented.
+- Purchases, equipment changes, and quest completions are transactional and serialized per user where required.
 - PostgreSQL is the primary state store.
 - `localStorage` is only acceptable for client session mechanics handled by Supabase, not gameplay persistence.
 - Frontend bundles must never include service-role credentials.
@@ -28,4 +28,8 @@ Life RPG uses Supabase Auth for identity and an Express API for all gameplay sta
 - `/api/v1/quests` provides authenticated, ownership-scoped CRUD for one-time quests. Reward snapshots and target attributes are derived by the backend.
 - Quest creation and archival write their activity events in the same database transaction.
 - `POST /api/v1/quests/:questId/complete` locks character, quest, and attribute rows in a consistent order before atomically persisting completion, progression, streak, and activity changes.
-- The frontend uses Supabase directly only for session operations; both profile endpoints run through Express.
+- `GET /api/v1/activity` exposes a bounded, cursor-based, newest-first private timeline without returning user IDs.
+- `/api/v1/rewards` and `/api/v1/inventory` expose the active catalog, owned rewards, atomic purchases, and single-item-per-type equipment replacement.
+- Purchase and equipment transactions lock the user's character row first, which serializes competing economy writes for that user.
+- Reward prices, balances, ownership, and equipped state are never accepted from the browser.
+- The frontend uses Supabase directly only for session operations; every gameplay request runs through Express.

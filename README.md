@@ -1,6 +1,6 @@
 # Life RPG
 
-Life RPG turns real-world tasks into RPG-style quests. This repository contains the hackathon foundation: authentication, API structure, Prisma schema, profile management, protected dashboard shell, and server-owned progression summaries.
+Life RPG turns real-world tasks into RPG-style quests. This repository contains the complete hackathon implementation: authentication, quests, progression, activity history, rewards, inventory, equipment, deployment configuration, and verification suites.
 
 ## Problem
 
@@ -66,6 +66,7 @@ Fill the environment variables, then run:
 ```bash
 npm run db:generate
 npm run db:migrate
+npm run db:seed
 npm run dev
 ```
 
@@ -129,6 +130,8 @@ API health: `http://localhost:3001/api/health`
 - `npm run lint`
 - `npm run typecheck`
 - `npm run test`
+- `npm run test:integration`
+- `npm run test:e2e`
 - `npm run db:generate`
 - `npm run db:migrate`
 - `npm run db:deploy`
@@ -145,6 +148,13 @@ API health: `http://localhost:3001/api/health`
 - `PATCH /api/v1/quests/:questId` updates editable fields on an active owned quest and recalculates authoritative values.
 - `DELETE /api/v1/quests/:questId` archives an active owned quest.
 - `POST /api/v1/quests/:questId/complete` permanently completes an active owned quest and atomically awards XP, gold, attribute XP, levels, streak progress, and activity events.
+- `GET /api/v1/activity` returns a private, cursor-paged activity timeline.
+- `GET /api/v1/rewards` lists the active server-priced reward catalog.
+- `POST /api/v1/rewards/:rewardId/purchase` atomically purchases one reward.
+- `GET /api/v1/inventory` lists owned rewards and equipment state.
+- `POST /api/v1/inventory/:inventoryItemId/equip` and `/unequip` update equipment atomically.
+
+Complete request and response documentation is in [docs/api.md](docs/api.md).
 
 Errors use:
 
@@ -190,15 +200,20 @@ Implemented:
 - atomic quest creation/archive activity events
 - exactly-once transactional quest completion with row locking and rollback protection
 - completion reward, level-up, attribute, and streak feedback in the quest board
+- persistent cursor-paged activity history
+- idempotently seeded reward catalog
+- exactly-once transactional reward purchases
+- persistent inventory with atomic equip, replacement, and unequip behavior
+- activity and shop screens with mobile, loading, empty, retry, and mutation states
+- normalized errors, request IDs, rate-limit responses, redacted logs, and expired-session handling
+- guarded real-database integration suite and desktop/mobile Playwright journey
+- Render Blueprint with static SPA fallback and manual deployment gate
 - responsive RPG dashboard shell
 - frontend environment, auth, API, profile, and progression tests
 - lint, typecheck, build, and test scripts
 
 Not implemented yet:
 
-- gold economy
-- reward purchasing
-- inventory equipment
 - achievements
 - social features
 - leaderboards
@@ -208,14 +223,13 @@ Not implemented yet:
 
 The detailed backend and frontend execution plan is in [docs/full-stack-completion-plan.md](docs/full-stack-completion-plan.md).
 
-1. Progression history and activity timeline.
-2. Shop listing and transactional purchases.
-3. Inventory and cosmetic equipment.
-4. Deployment hardening and observability.
+1. Achievements and recurring quests.
+2. Social challenges and leaderboards.
+3. Additional cosmetic assets and themes.
 
 ## Deployment Notes
 
-Deploy the client and server separately. Set Vite variables only for public client configuration. Keep database URLs and future server-only secrets out of frontend bundles.
+Deploy the frontend and backend separately. Set Vite variables only for public client configuration. Keep database URLs and server-only secrets out of frontend bundles. A no-Docker Render Blueprint and release runbook are provided in [docs/testing-and-deployment.md](docs/testing-and-deployment.md).
 
 Deployment checklist:
 

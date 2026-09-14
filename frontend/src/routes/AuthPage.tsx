@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2, KeyRound, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,6 +24,7 @@ type LocationState = {
 };
 
 export function AuthPage() {
+  const reduceMotion = useReducedMotion();
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [formError, setFormError] = useState<string | null>(null);
   const [formNotice, setFormNotice] = useState<string | null>(null);
@@ -138,9 +139,9 @@ export function AuthPage() {
           <AnimatePresence>
             {formError ? (
               <motion.p
-                initial={{ opacity: 0, y: -4 }}
+                initial={reduceMotion ? false : { opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
                 className="rounded-md border border-ruby/40 bg-ruby/10 px-3 py-2 text-sm text-ruby"
                 role="alert"
               >
@@ -152,9 +153,9 @@ export function AuthPage() {
           <AnimatePresence>
             {formNotice ? (
               <motion.p
-                initial={{ opacity: 0, y: -4 }}
+                initial={reduceMotion ? false : { opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
                 className="flex items-start gap-2 rounded-md border border-emerald/40 bg-emerald/10 px-3 py-2 text-sm text-emerald"
                 role="status"
               >

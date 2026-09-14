@@ -1,15 +1,17 @@
 import { ArrowRight, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { HeroCharacter } from "../components/game/HeroCharacter";
 import { PageContainer } from "../components/ui/PageContainer";
 
 export function LandingPage() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <PageContainer className="flex min-h-screen items-center py-10">
       <div className="grid w-full gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-center">
         <motion.section
-          initial={{ opacity: 0, y: 16 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
           className="max-w-3xl"

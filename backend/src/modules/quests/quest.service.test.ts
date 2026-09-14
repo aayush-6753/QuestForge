@@ -106,7 +106,12 @@ describe("quest service", () => {
       data: {
         userId,
         type: ActivityEventType.QUEST_CREATED,
-        metadata: { questId, category: QuestCategory.LEARNING, difficulty: QuestDifficulty.MEDIUM },
+        metadata: {
+          questId,
+          questTitle: quest.title,
+          category: QuestCategory.LEARNING,
+          difficulty: QuestDifficulty.MEDIUM,
+        },
       },
     });
   });
@@ -178,7 +183,7 @@ describe("quest service", () => {
       data: { status: QuestStatus.ARCHIVED },
     });
     expect(tx.activityEvent.create).toHaveBeenCalledWith({
-      data: { userId, type: ActivityEventType.QUEST_ARCHIVED, metadata: { questId } },
+      data: { userId, type: ActivityEventType.QUEST_ARCHIVED, metadata: { questId, questTitle: quest.title } },
     });
   });
 });

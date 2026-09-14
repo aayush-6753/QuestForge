@@ -3,12 +3,14 @@ import { ApiClientError, apiRequest } from "./api-client";
 
 const mocks = vi.hoisted(() => ({
   getSession: vi.fn(),
+  signOut: vi.fn(),
 }));
 
 vi.mock("./supabase", () => ({
   supabase: {
     auth: {
       getSession: mocks.getSession,
+      signOut: mocks.signOut,
     },
   },
 }));
@@ -19,6 +21,7 @@ describe("apiRequest", () => {
     mocks.getSession.mockResolvedValue({
       data: { session: { access_token: "access-token" } },
     });
+    mocks.signOut.mockResolvedValue({ error: null });
   });
 
   it("attaches the access token and sends JSON writes", async () => {
@@ -67,5 +70,17 @@ describe("apiRequest", () => {
       message: "Invalid profile.",
       requestId: "request-1",
     });
+  });
+
+  it("clears an expired local session after an authenticated 401", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ error: { code: "UNAUTHORIZED", message: "Expired." } }), { status: 401 }),
+      ),
+    );
+
+    await expect(apiRequest("/api/v1/me")).rejects.toMatchObject({ status: 401, code: "UNAUTHORIZED" });
+    expect(mocks.signOut).toHaveBeenCalledWith({ scope: "local" });
   });
 });

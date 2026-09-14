@@ -7,18 +7,24 @@ function isInvalidJson(error: unknown): error is SyntaxError & { type: "entity.p
   return error instanceof SyntaxError && "type" in error && error.type === "entity.parse.failed";
 }
 
+function safeErrorContext(error: unknown) {
+  if (!(error instanceof Error)) return { kind: typeof error };
+  const code = "code" in error && typeof error.code === "string" ? error.code : undefined;
+  return { name: error.name, message: error.message, ...(code ? { code } : {}) };
+}
+
 export function errorHandler(error: unknown, req: Request, res: Response, _next: NextFunction) {
   const apiError =
     error instanceof ApiError
       ? error
       : isInvalidJson(error)
         ? new ApiError(400, "INVALID_JSON", "Request body contains invalid JSON.")
-      : new ApiError(500, "INTERNAL_SERVER_ERROR", "Something went wrong.");
+        : new ApiError(500, "INTERNAL_SERVER_ERROR", "Something went wrong.");
 
   if (apiError.statusCode >= 500) {
     logger.error("Unhandled API error", {
       requestId: req.requestId,
-      error,
+      error: safeErrorContext(error),
     });
   }
 

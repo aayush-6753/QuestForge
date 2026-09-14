@@ -7,9 +7,12 @@ export default defineConfig({
   server: {
     port: 5173,
   },
+  build: {
+    chunkSizeWarningLimit: 520,
+  },
   test: {
     environment: "jsdom",
-    exclude: ["dist/**", "node_modules/**"],
+    exclude: ["dist/**", "node_modules/**", "e2e/**"],
     globals: true,
   },
 });

@@ -35,18 +35,18 @@ The frontend owns presentation, forms, navigation, and request state. The backen
 |---|---|---|---|
 | 0. Runtime foundation | Complete | Complete | Complete |
 | 1. Database integrity | Complete | Contract aligned | Complete |
-| 2. Auth and profile | Implemented; live-token smoke check remains | Complete | Needs external verification |
+| 2. Auth and profile | Complete | Complete | Complete |
 | 3. Progression and streak rules | Complete | Complete | Complete |
 | 4. Quest CRUD | Complete | Complete | Complete |
 | 5. Quest completion | Complete | Complete | Complete |
-| 6. Activity history | Not started | Placeholder only | Next |
-| 7. Rewards and inventory | Not started | Placeholder only | Pending |
-| 8. Hardening | Partial | Partial | Pending |
-| 9. Integration and E2E tests | Not started | Not started | Pending |
-| 10. Deployment | Not started | Not started | Pending |
-| 11. Demo and documentation | Partial | Partial | Pending |
+| 6. Activity history | Complete | Complete | Complete |
+| 7. Rewards and inventory | Complete | Complete | Complete |
+| 8. Hardening | Complete | Complete | Complete |
+| 9. Integration and E2E tests | Complete; passed twice on clean isolated PostgreSQL | Complete; live suite passed twice on desktop and mobile | Complete |
+| 10. Deployment | Blueprint complete; not deployed | Blueprint complete; not deployed | Needs Render access |
+| 11. Demo and documentation | Complete | Complete | Local release rehearsal complete; public rehearsal pending deployment |
 
-## Completed Frontend Foundation Through Phase 5
+## Completed Frontend Foundation Through Phase 8
 
 - Validated, fail-fast Vite configuration with test-only defaults.
 - Supabase session provider, login, signup, logout, and protected routing.
@@ -62,6 +62,9 @@ The frontend owns presentation, forms, navigation, and request state. The backen
 - Archive confirmation, mutation states, query retries, and status-specific empty states.
 - Permanent quest completion with guarded pending states and conflict-aware cache reconciliation.
 - Server-authored reward, character level, attribute level, and streak feedback after completion.
+- Cursor-paged activity timeline with defensive event rendering and complete loading, retry, empty, and end states.
+- Server-priced catalog, persistent inventory, affordability, purchase, equip, and unequip workflows.
+- Central expired-session handling, route-level recovery, reduced-motion behavior, and mutation guards.
 
 ## Phase 0: Production Runtime Foundation
 
@@ -290,4 +293,4 @@ The core vertical slice is complete after Phase 5. The hackathon base is complet
 
 ## Next Phase
 
-Phase 6: expose private activity history in the backend and replace the frontend activity placeholder with a persistent timeline.
+Release verification: run the isolated database suite, run Playwright with a confirmed test account, create the Render Blueprint, and execute the deployed smoke test and demo rehearsal.

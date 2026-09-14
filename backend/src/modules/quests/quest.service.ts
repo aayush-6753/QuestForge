@@ -69,7 +69,12 @@ export async function createQuest(prisma: PrismaClient, userId: string, input: C
       data: {
         userId,
         type: ActivityEventType.QUEST_CREATED,
-        metadata: { questId: quest.id, category: quest.category, difficulty: quest.difficulty },
+        metadata: {
+          questId: quest.id,
+          questTitle: quest.title,
+          category: quest.category,
+          difficulty: quest.difficulty,
+        },
       },
     });
 
@@ -143,7 +148,7 @@ export async function archiveQuest(prisma: PrismaClient, userId: string, questId
       data: {
         userId,
         type: ActivityEventType.QUEST_ARCHIVED,
-        metadata: { questId },
+        metadata: { questId, questTitle: quest.title },
       },
     });
 

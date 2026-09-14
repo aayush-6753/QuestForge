@@ -74,13 +74,14 @@ enum RewardRarity {
 }
 
 enum ActivityEventType {
-  QUEST_CREATED    @map("quest_created")
-  QUEST_COMPLETED  @map("quest_completed")
-  QUEST_ARCHIVED   @map("quest_archived")
-  LEVEL_UP         @map("level_up")
-  STREAK_UPDATED   @map("streak_updated")
-  REWARD_PURCHASED @map("reward_purchased")
-  REWARD_EQUIPPED  @map("reward_equipped")
+  QUEST_CREATED     @map("quest_created")
+  QUEST_COMPLETED   @map("quest_completed")
+  QUEST_ARCHIVED    @map("quest_archived")
+  LEVEL_UP          @map("level_up")
+  STREAK_UPDATED    @map("streak_updated")
+  REWARD_PURCHASED  @map("reward_purchased")
+  REWARD_EQUIPPED   @map("reward_equipped")
+  REWARD_UNEQUIPPED @map("reward_unequipped")
 
   @@map("activity_event_type")
 }
@@ -216,6 +217,7 @@ model InventoryItem {
   rewardItem RewardItem @relation(fields: [rewardItemId], references: [id], onDelete: Restrict)
 
   @@unique([userId, rewardItemId])
+  @@index([userId, isEquipped])
   @@index([rewardItemId])
   @@map("inventory_items")
 }
