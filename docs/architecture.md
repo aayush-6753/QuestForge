@@ -23,4 +23,6 @@ Life RPG uses Supabase Auth for identity and an Express API for all gameplay sta
 
 ## Current Gameplay Surface
 
-Only `GET /api/v1/me` touches gameplay data. It bootstraps a profile, character, and five attribute rows idempotently for the verified user.
+- `GET /api/v1/me` bootstraps and returns a profile, character, five attributes, and server-calculated progression summaries.
+- `PATCH /api/v1/me` updates the verified user's nullable display name and validated IANA timezone.
+- The frontend uses Supabase directly only for session operations; both profile endpoints run through Express.

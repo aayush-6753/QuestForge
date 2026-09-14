@@ -50,3 +50,8 @@ export type MeResponse = {
     attributes: Array<ProgressionSummary & { type: AttributeType }>;
   };
 };
+
+export type UpdateProfileInput = {
+  displayName?: string | null;
+  timezone?: string;
+};

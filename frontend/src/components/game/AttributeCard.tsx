@@ -1,5 +1,6 @@
-import type { CharacterAttribute } from "../../types/api";
+import type { CharacterAttribute, ProgressionSummary } from "../../types/api";
 import { cn } from "../../lib/cn";
+import { XPProgressBar } from "./XPProgressBar";
 
 const attributeStyles: Record<CharacterAttribute["type"], string> = {
   STRENGTH: "border-ruby/35 bg-ruby/10 text-ruby",
@@ -17,13 +18,24 @@ const labels: Record<CharacterAttribute["type"], string> = {
   VITALITY: "Vitality",
 };
 
-export function AttributeCard({ attribute }: { attribute: CharacterAttribute }) {
+export function AttributeCard({
+  attribute,
+  progression,
+}: {
+  attribute: CharacterAttribute;
+  progression?: ProgressionSummary;
+}) {
   return (
     <article className={cn("rounded-lg border p-4", attributeStyles[attribute.type])}>
       <h3 className="font-display text-lg text-vellum">{labels[attribute.type]}</h3>
       <p className="mt-2 text-sm text-parchment/75">
-        Level {attribute.level} - {attribute.xp} attribute XP
+        Level {progression?.level ?? attribute.level} - {attribute.xp} total XP
       </p>
+      {progression ? (
+        <div className="mt-4 text-parchment">
+          <XPProgressBar progression={progression} label={`${labels[attribute.type]} XP`} />
+        </div>
+      ) : null}
     </article>
   );
 }

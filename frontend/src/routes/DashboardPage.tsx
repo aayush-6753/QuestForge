@@ -1,7 +1,9 @@
 import { Store, WandSparkles } from "lucide-react";
+import { useState } from "react";
 import { AppShell } from "../components/layout/AppShell";
 import { AttributeCard } from "../components/game/AttributeCard";
 import { CharacterCard } from "../components/game/CharacterCard";
+import { ProfileEditor } from "../components/profile/ProfileEditor";
 import { QuestBoard } from "../components/quests/QuestBoard";
 import { ErrorState } from "../components/ui/ErrorState";
 import { LoadingSkeleton } from "../components/ui/LoadingSkeleton";
@@ -9,6 +11,7 @@ import { PageContainer } from "../components/ui/PageContainer";
 import { useMe } from "../hooks/useMe";
 
 export function DashboardPage() {
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const me = useMe();
 
   if (me.isLoading) {
@@ -42,7 +45,14 @@ export function DashboardPage() {
   return (
     <AppShell>
       <PageContainer className="grid gap-5">
-        <CharacterCard character={data.character} profile={data.profile} progression={data.progression.character} />
+        <CharacterCard
+          character={data.character}
+          profile={data.profile}
+          progression={data.progression.character}
+          onEdit={() => setIsEditingProfile(true)}
+        />
+
+        {isEditingProfile ? <ProfileEditor profile={data.profile} onCancel={() => setIsEditingProfile(false)} /> : null}
 
         <div className="grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
           <QuestBoard />
@@ -52,7 +62,11 @@ export function DashboardPage() {
             <h2 className="font-display text-2xl text-vellum">Character Growth</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {data.attributes.map((attribute) => (
-                <AttributeCard key={attribute.id} attribute={attribute} />
+                <AttributeCard
+                  key={attribute.id}
+                  attribute={attribute}
+                  progression={data.progression.attributes.find((summary) => summary.type === attribute.type)}
+                />
               ))}
             </div>
           </section>

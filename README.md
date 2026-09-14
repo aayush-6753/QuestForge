@@ -1,6 +1,6 @@
 # Life RPG
 
-Life RPG turns real-world tasks into RPG-style quests. This repository is the hackathon foundation: authentication, API structure, Prisma schema, protected dashboard shell, and the first server-owned profile bootstrap.
+Life RPG turns real-world tasks into RPG-style quests. This repository contains the hackathon foundation: authentication, API structure, Prisma schema, profile management, protected dashboard shell, and server-owned progression summaries.
 
 ## Problem
 
@@ -73,7 +73,7 @@ npm run dev
 
 1. Create a Supabase project.
 2. Copy the project URL into `VITE_SUPABASE_URL` and `SUPABASE_URL`.
-3. Copy the anon key into `VITE_SUPABASE_ANON_KEY` and `SUPABASE_ANON_KEY`.
+3. Copy the publishable key, or legacy anon key, into `VITE_SUPABASE_ANON_KEY` and `SUPABASE_ANON_KEY`.
 4. Configure Email auth in Supabase Auth.
 5. Use the Supabase Postgres connection strings for `DATABASE_URL` and `DIRECT_URL`.
 6. Do not add a Supabase service-role key unless a future server-only feature truly needs it.
@@ -164,6 +164,7 @@ Implemented:
 - React app shell
 - Supabase Auth provider
 - login/signup UI
+- email-confirmation-aware signup
 - protected `/app` route
 - TanStack Query setup
 - shared API client with bearer token attachment
@@ -173,15 +174,18 @@ Implemented:
 - RLS-enabled gameplay tables with Supabase Data API access revoked
 - local CORS support for Vite dev ports `5173` and `5174`
 - idempotent `GET /api/v1/me`
+- profile and timezone updates through `PATCH /api/v1/me`
+- nonlinear character and attribute progression summaries
+- timezone-aware streak rules
+- backend-driven character and attribute XP displays
 - responsive RPG dashboard shell
+- frontend environment, auth, API, profile, and progression tests
 - lint, typecheck, build, and test scripts
 
 Not implemented yet:
 
 - quest CRUD
 - quest completion
-- XP reward calculations
-- level progression logic
 - gold economy
 - reward purchasing
 - inventory equipment
@@ -191,6 +195,8 @@ Not implemented yet:
 - recurring quests
 
 ## Future Roadmap
+
+The detailed backend and frontend execution plan is in [docs/full-stack-completion-plan.md](docs/full-stack-completion-plan.md).
 
 1. Quest CRUD with server-side ownership checks.
 2. Transactional quest completion awarding XP, gold, attributes, streak updates, and activity events.

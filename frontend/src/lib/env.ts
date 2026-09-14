@@ -12,15 +12,21 @@ const fallbackEnv = {
   VITE_API_BASE_URL: "http://localhost:3001",
 };
 
-const parsed = envSchema.safeParse({
-  VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || fallbackEnv.VITE_SUPABASE_URL,
-  VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY || fallbackEnv.VITE_SUPABASE_ANON_KEY,
-  VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL || fallbackEnv.VITE_API_BASE_URL,
-});
+export function loadEnv(values: Record<string, unknown>) {
+  const parsed = envSchema.safeParse(values);
 
-if (!parsed.success) {
-  const details = parsed.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`).join("; ");
-  throw new Error(`Invalid client environment: ${details}`);
+  if (!parsed.success) {
+    const details = parsed.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`).join("; ");
+    throw new Error(`Invalid client environment: ${details}`);
+  }
+
+  return parsed.data;
 }
 
-export const env = parsed.data;
+const testFallback: Partial<typeof fallbackEnv> = import.meta.env.MODE === "test" ? fallbackEnv : {};
+
+export const env = loadEnv({
+  VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || testFallback.VITE_SUPABASE_URL,
+  VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY || testFallback.VITE_SUPABASE_ANON_KEY,
+  VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL || testFallback.VITE_API_BASE_URL,
+});

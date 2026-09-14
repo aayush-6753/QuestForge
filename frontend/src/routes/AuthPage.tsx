@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { KeyRound, Mail } from "lucide-react";
+import { CheckCircle2, KeyRound, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -26,6 +26,7 @@ type LocationState = {
 export function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [formError, setFormError] = useState<string | null>(null);
+  const [formNotice, setFormNotice] = useState<string | null>(null);
   const { session, signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,12 +50,20 @@ export function AuthPage() {
 
   async function onSubmit(values: AuthFormValues) {
     setFormError(null);
+    setFormNotice(null);
 
     try {
       if (mode === "login") {
         await signIn(values.email, values.password);
-      } else {
-        await signUp(values.email, values.password);
+        navigate(from, { replace: true });
+        return;
+      }
+
+      const result = await signUp(values.email, values.password);
+
+      if (result.requiresEmailConfirmation) {
+        setFormNotice("Check your email to confirm your account, then sign in.");
+        return;
       }
 
       navigate(from, { replace: true });
@@ -85,7 +94,11 @@ export function AuthPage() {
             className={`rounded px-3 py-2 text-sm font-bold transition ${
               mode === "login" ? "bg-ember text-ink" : "text-parchment/70 hover:text-vellum"
             }`}
-            onClick={() => setMode("login")}
+            onClick={() => {
+              setMode("login");
+              setFormError(null);
+              setFormNotice(null);
+            }}
           >
             Login
           </button>
@@ -94,7 +107,11 @@ export function AuthPage() {
             className={`rounded px-3 py-2 text-sm font-bold transition ${
               mode === "signup" ? "bg-ember text-ink" : "text-parchment/70 hover:text-vellum"
             }`}
-            onClick={() => setMode("signup")}
+            onClick={() => {
+              setMode("signup");
+              setFormError(null);
+              setFormNotice(null);
+            }}
           >
             Sign up
           </button>
@@ -128,6 +145,21 @@ export function AuthPage() {
                 role="alert"
               >
                 {formError}
+              </motion.p>
+            ) : null}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {formNotice ? (
+              <motion.p
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                className="flex items-start gap-2 rounded-md border border-emerald/40 bg-emerald/10 px-3 py-2 text-sm text-emerald"
+                role="status"
+              >
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                {formNotice}
               </motion.p>
             ) : null}
           </AnimatePresence>
