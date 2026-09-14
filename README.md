@@ -48,7 +48,7 @@ life-rpg/
 
 ## Prerequisites
 
-- Node.js 20.11+
+- Node.js 22+
 - npm 10+
 - PostgreSQL database, preferably Supabase PostgreSQL
 - Supabase project for Auth
@@ -136,7 +136,7 @@ API health: `http://localhost:3001/api/health`
 
 ## API Overview
 
-- `GET /api/health` returns `{ "data": { "status": "ok" } }`.
+- `GET /api/health` verifies PostgreSQL and returns `{ "data": { "status": "ok", "database": "ok" } }`.
 - `GET /api/v1/me` requires a Supabase bearer token. It idempotently creates and returns the user profile, character, and attributes.
 
 Errors use:

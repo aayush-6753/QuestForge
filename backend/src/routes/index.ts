@@ -1,11 +1,18 @@
 import { Router } from "express";
+import { prisma } from "../lib/prisma.js";
 import { meRouter } from "../modules/users/me.routes.js";
+import { ApiError } from "../utils/api-error.js";
 import { sendSuccess } from "../utils/api-response.js";
 
 export const apiRouter = Router();
 
-apiRouter.get("/health", (_req, res) => {
-  sendSuccess(res, { status: "ok" });
+apiRouter.get("/health", async (_req, res, next) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    sendSuccess(res, { status: "ok", database: "ok" });
+  } catch {
+    next(new ApiError(503, "SERVICE_UNAVAILABLE", "Database is unavailable."));
+  }
 });
 
 apiRouter.use("/v1/me", meRouter);
