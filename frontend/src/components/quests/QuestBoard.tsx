@@ -9,7 +9,7 @@ import {
   type QuestStatus,
   type SaveQuestInput,
 } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 import { CompletionFeedback } from "./CompletionFeedback";
 import { EmptyQuestState } from "./EmptyQuestState";
 import { QuestForm } from "./QuestForm";

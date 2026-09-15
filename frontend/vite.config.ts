@@ -4,6 +4,11 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   plugins: [react()],
   cacheDir: ".vite-cache",
+  resolve: {
+    alias: {
+      "@": new URL("./src", import.meta.url).pathname,
+    },
+  },
   server: {
     port: 5173,
   },

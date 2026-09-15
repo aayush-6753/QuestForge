@@ -1,8 +1,8 @@
 import { LogOut } from "lucide-react";
 import { useAuth } from "../../features/auth/auth-context";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 
-export function TopBar() {
+export function TopBar({ title = "Adventurer Dashboard" }: { title?: string }) {
   const { signOut, session } = useAuth();
 
   return (
@@ -10,7 +10,7 @@ export function TopBar() {
       <div className="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div>
           <p className="text-xs font-bold uppercase text-ember">Current chapter</p>
-          <h1 className="font-display text-xl text-vellum">Adventurer Dashboard</h1>
+          <h1 className="font-display text-xl text-vellum">{title}</h1>
         </div>
         <div className="flex items-center gap-3">
           <span className="hidden max-w-56 truncate text-sm text-parchment/70 sm:inline">{session?.user.email}</span>

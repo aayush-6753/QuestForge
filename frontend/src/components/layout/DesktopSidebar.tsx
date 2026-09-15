@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 import { cn } from "../../lib/cn";
 
 const navItems = [
-  { label: "Chronicle", to: "/app", icon: BookOpen },
-  { label: "Quests", to: "/app#quests", icon: ScrollText },
-  { label: "Attributes", to: "/app#attributes", icon: Shield },
-  { label: "Shop", to: "/app#shop", icon: Store },
-  { label: "Activity", to: "/app#activity", icon: Sparkles },
+  { label: "Chronicle", to: "/app", icon: BookOpen, end: true },
+  { label: "Quests", to: "/app/quests", icon: ScrollText },
+  { label: "Attributes", to: "/app/attributes", icon: Shield },
+  { label: "Shop", to: "/app/shop", icon: Store },
+  { label: "Activity", to: "/app/activity", icon: Sparkles },
 ];
 
 export function DesktopSidebar() {
@@ -22,6 +22,7 @@ export function DesktopSidebar() {
           <NavLink
             key={item.label}
             to={item.to}
+            end={item.end}
             className={({ isActive }) =>
               cn(
                 "flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-parchment/75 transition hover:bg-vellum/10 hover:text-vellum",

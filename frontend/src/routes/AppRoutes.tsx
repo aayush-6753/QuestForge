@@ -20,6 +20,14 @@ export function AppRoutes() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/app/:section"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

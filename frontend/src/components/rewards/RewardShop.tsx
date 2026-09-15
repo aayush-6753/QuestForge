@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useCatalog, useInventory, usePurchaseReward, useSetRewardEquipped } from "../../hooks/useRewards";
 import { cn } from "../../lib/cn";
 import type { InventoryItem, RewardItem, RewardType } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 
 const rewardIcons: Record<RewardType, LucideIcon> = {
   COSMETIC: Shirt,

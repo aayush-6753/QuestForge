@@ -12,7 +12,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useActivity } from "../../hooks/useActivity";
 import type { ActivityEvent } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 
 type EventView = { label: string; detail: string; icon: LucideIcon };
 

@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap");
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
 
 @tailwind base;
 @tailwind components;
@@ -60,5 +63,89 @@ input {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@layer base {
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+  }
+  :root {
+    --background: #161412;
+    --foreground: #fbf3dc;
+    --card: #211f1b;
+    --card-foreground: #fbf3dc;
+    --popover: #211f1b;
+    --popover-foreground: #fbf3dc;
+    --primary: #d59d43;
+    --primary-foreground: #161412;
+    --secondary: #2d2924;
+    --secondary-foreground: #fbf3dc;
+    --muted: #2d2924;
+    --muted-foreground: #efe3c4;
+    --accent: #4d78b7;
+    --accent-foreground: #fbf3dc;
+    --destructive: #c8525f;
+    --border: rgb(251 243 220 / 0.15);
+    --input: rgb(251 243 220 / 0.15);
+    --ring: #d59d43;
+    --chart-1: #d59d43;
+    --chart-2: #4d78b7;
+    --chart-3: #4f9a6d;
+    --chart-4: #8c6cc4;
+    --chart-5: #d4b44a;
+    --radius: 0.625rem;
+    --sidebar: #211f1b;
+    --sidebar-foreground: #fbf3dc;
+    --sidebar-primary: #d59d43;
+    --sidebar-primary-foreground: #161412;
+    --sidebar-accent: #2d2924;
+    --sidebar-accent-foreground: #fbf3dc;
+    --sidebar-border: rgb(251 243 220 / 0.15);
+    --sidebar-ring: #d59d43;
+  }
+  .dark {
+    --background: #161412;
+    --foreground: #fbf3dc;
+    --card: #211f1b;
+    --card-foreground: #fbf3dc;
+    --popover: #211f1b;
+    --popover-foreground: #fbf3dc;
+    --primary: #d59d43;
+    --primary-foreground: #161412;
+    --secondary: #2d2924;
+    --secondary-foreground: #fbf3dc;
+    --muted: #2d2924;
+    --muted-foreground: #efe3c4;
+    --accent: #4d78b7;
+    --accent-foreground: #fbf3dc;
+    --destructive: #c8525f;
+    --border: rgb(251 243 220 / 0.15);
+    --input: rgb(251 243 220 / 0.15);
+    --ring: #d59d43;
+    --chart-1: #d59d43;
+    --chart-2: #4d78b7;
+    --chart-3: #4f9a6d;
+    --chart-4: #8c6cc4;
+    --chart-5: #d4b44a;
+    --sidebar: #211f1b;
+    --sidebar-foreground: #fbf3dc;
+    --sidebar-primary: #d59d43;
+    --sidebar-primary-foreground: #161412;
+    --sidebar-accent: #2d2924;
+    --sidebar-accent-foreground: #fbf3dc;
+    --sidebar-border: rgb(251 243 220 / 0.15);
+    --sidebar-ring: #d59d43;
+  }
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }

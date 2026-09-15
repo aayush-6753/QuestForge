@@ -1,6 +1,6 @@
 import { Pencil } from "lucide-react";
 import type { Character, Profile, ProgressionSummary } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 import { GoldCounter } from "./GoldCounter";
 import { StreakIndicator } from "./StreakIndicator";
 import { XPProgressBar } from "./XPProgressBar";

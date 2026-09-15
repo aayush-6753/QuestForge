@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useUpdateMe } from "../../hooks/useMe";
 import type { Profile } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 import { Input } from "../ui/Input";
 
 const profileSchema = z.object({

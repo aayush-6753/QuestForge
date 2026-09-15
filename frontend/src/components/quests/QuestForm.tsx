@@ -8,7 +8,7 @@ import {
   type Quest,
   type SaveQuestInput,
 } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 import { Input } from "../ui/Input";
 
 const questFormSchema = z.object({

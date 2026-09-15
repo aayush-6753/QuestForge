@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button } from "../components/ui/Button";
+import { Button } from "../components/ui/AppButton";
 import { Input } from "../components/ui/Input";
 import { PageContainer } from "../components/ui/PageContainer";
 import { useAuth } from "../features/auth/auth-context";

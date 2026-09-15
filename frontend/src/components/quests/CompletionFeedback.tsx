@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Coins, Flame, Sparkles, Trophy, X } from "lucide-react";
 import type { CompleteQuestResponse } from "../../types/api";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/AppButton";
 
 function label(value: string) {
   const lower = value.toLowerCase();
