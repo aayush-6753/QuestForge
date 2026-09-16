@@ -17,10 +17,10 @@ export function CharacterCard({
   onEdit: () => void;
 }) {
   return (
-    <section className="rounded-lg border border-vellum/10 bg-coal/90 p-5 shadow-glow">
+    <section className="panel p-5">
       <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-bold uppercase text-ember">Character</p>
+          <p className="eyebrow">Character</p>
           <h2 className="mt-1 font-display text-3xl text-vellum">
             {profile.displayName ?? "Unnamed Adventurer"}
           </h2>

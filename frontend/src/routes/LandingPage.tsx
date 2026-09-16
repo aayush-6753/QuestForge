@@ -96,15 +96,29 @@ export function LandingPage() {
 
   return (
     <PageContainer className="py-0">
-      <section className="grid min-h-[72svh] w-full gap-10 py-6 lg:grid-cols-[1fr_0.85fr] lg:items-center">
+      <header className="flex min-h-20 items-center justify-between gap-4 border-b border-vellum/10" aria-label="Primary navigation">
+        <span className="font-display text-xl text-vellum sm:text-2xl">Life <span className="text-ember">RPG</span></span>
+        <div className="flex items-center gap-2 sm:gap-5">
+          <Link to="/auth" className="hard-button order-first text-xs sm:order-last sm:text-sm">Begin Your Journey <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+          <nav className="hidden items-center gap-4 text-xs font-bold uppercase tracking-wider text-parchment/65 lg:flex" aria-label="Landing sections">
+            <a href="#how-it-works" className="hover:text-vellum">How it works</a>
+            <a href="#features" className="hover:text-vellum">Features</a>
+            <a href="#quests" className="hover:text-vellum">Quests</a>
+            <a href="#philosophy" className="hover:text-vellum">Philosophy</a>
+          </nav>
+          <Link to="/auth" className="hidden text-sm font-bold text-parchment/75 hover:text-vellum sm:inline">Sign In</Link>
+        </div>
+      </header>
+
+      <section className="grid min-h-[76svh] w-full gap-10 py-14 lg:grid-cols-[1fr_0.95fr] lg:items-center">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
           className="max-w-3xl"
         >
-          <p className="text-sm font-bold uppercase text-ember">Life RPG</p>
-          <h1 className="mt-4 font-display text-5xl leading-tight text-vellum sm:text-6xl lg:text-7xl" aria-label={title}>
+          <p className="eyebrow">A disciplined system for self-development</p>
+          <h1 className="mt-4 font-display text-5xl leading-[0.98] text-vellum sm:text-6xl lg:text-7xl" aria-label={title}>
             {reduceMotion ? title : <RollingTitle />}
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-parchment/78">
@@ -115,7 +129,7 @@ export function LandingPage() {
             <PrimaryLink>Begin Your Journey</PrimaryLink>
             <Link
               to="/auth"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-vellum/15 px-4 py-2 text-sm font-bold text-vellum transition hover:bg-vellum/10"
+              className="inline-flex min-h-11 items-center justify-center gap-2 border border-vellum/25 px-4 py-2 text-sm font-bold text-vellum transition hover:bg-vellum/10"
             >
               <LogIn className="h-5 w-5 text-ember" aria-hidden="true" />
               Sign In
@@ -126,7 +140,7 @@ export function LandingPage() {
         <HeroCharacter />
       </section>
 
-      <section className="border-y border-vellum/10 py-20">
+      <section id="how-it-works" className="border-y border-vellum/10 py-20">
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase text-ember">How it works</p>
           <h2 className="mt-3 font-display text-4xl text-vellum sm:text-5xl">Every great journey starts with a quest.</h2>
@@ -136,21 +150,21 @@ export function LandingPage() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
+        <div className="mt-10 grid gap-0 border border-vellum/15 md:grid-cols-4">
           {steps.map((step) => (
-            <article key={step.label} className="rounded-lg border border-vellum/10 bg-coal/70 p-5">
-              <p className="text-sm font-bold text-ember">{step.label}</p>
+            <article key={step.label} className="relative border-b border-vellum/10 bg-coal/70 p-5 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
+              <p className="font-display text-4xl text-ember/75">{step.label}</p>
               <h3 className="mt-2 font-display text-2xl text-vellum">{step.title}</h3>
               <p className="mt-3 leading-7 text-parchment/70">{step.body}</p>
               {step.examples ? (
-                <p className="mt-4 text-sm leading-6 text-parchment/55">{step.examples.join("  ")}</p>
+                <div className="mt-4 grid gap-1.5 text-xs text-parchment/65">{step.examples.map((example) => <span key={example} className="border-l border-ember pl-2">{example}</span>)}</div>
               ) : null}
             </article>
           ))}
         </div>
       </section>
 
-      <section className="py-20">
+      <section id="features" className="py-20">
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase text-ember">Features</p>
           <h2 className="mt-3 font-display text-4xl text-vellum sm:text-5xl">Your life. Your character build.</h2>
@@ -159,10 +173,11 @@ export function LandingPage() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <article key={feature.title} className="rounded-lg border border-vellum/10 bg-ink/45 p-5">
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature, index) => (
+            <article key={feature.title} className={`panel-soft p-5 ${index === 0 || index === 2 ? "lg:col-span-2" : ""} ${index === 0 ? "lg:row-span-2" : ""}`}>
               <feature.icon className="h-6 w-6 text-ember" aria-hidden="true" />
+              {index === 2 ? <p className="mt-6 font-display text-6xl leading-none text-ember">12</p> : null}
               <h3 className="mt-4 font-display text-xl text-vellum">{feature.title}</h3>
               <p className="mt-2 leading-7 text-parchment/70">{feature.body}</p>
             </article>
@@ -170,7 +185,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="grid gap-8 border-y border-vellum/10 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <section className="grid gap-8 border-y border-vellum/10 py-20 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
         <div>
           <p className="text-sm font-bold uppercase text-ember">Character sheet</p>
           <h2 className="mt-3 font-display text-4xl text-vellum sm:text-5xl">Your progress should feel like progress.</h2>
@@ -183,13 +198,13 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-ember/25 bg-coal/80 p-6 shadow-glow">
+        <div className="panel border-ember/35 p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="text-sm font-bold uppercase text-ember">Level 12</p>
               <h3 className="font-display text-3xl text-vellum">Adventurer</h3>
             </div>
-            <p className="rounded-md border border-vellum/10 bg-ink/65 px-3 py-2 text-sm font-bold text-citrine">
+            <p className="border border-vellum/10 bg-ink/65 px-3 py-2 text-sm font-bold text-citrine">
               3,420 XP
             </p>
           </div>
@@ -208,7 +223,7 @@ export function LandingPage() {
             ))}
           </dl>
 
-          <div className="mt-6 rounded-lg border border-vellum/10 bg-ink/55 p-4">
+          <div className="mt-6 border border-vellum/10 bg-ink/55 p-4">
             <p className="text-sm font-bold uppercase text-ember">Current Quest</p>
             <p className="mt-2 font-semibold text-vellum">Complete 5 workouts this week</p>
             <p className="mt-2 text-sm text-parchment/70">Reward: +350 XP / +2 Strength / +1 Discipline</p>
@@ -216,17 +231,18 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section id="quests" className="py-20">
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase text-ember">Quest examples</p>
           <h2 className="mt-3 font-display text-4xl text-vellum sm:text-5xl">Quests for the life you actually live.</h2>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {questExamples.map((quest) => (
-            <article key={quest.title} className="rounded-lg border border-vellum/10 bg-coal/70 p-5">
+        <div className="mt-10 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+          {questExamples.map((quest, index) => (
+            <article key={quest.title} className={`panel p-5 ${index === 2 ? "xl:translate-y-8" : ""}`}>
               <quest.icon className="h-6 w-6 text-ember" aria-hidden="true" />
-              <h3 className="mt-4 font-display text-xl text-vellum">{quest.title}</h3>
+              <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.16em] text-parchment/55">{quest.title.replace(" Quest", "")} · Mission</p>
+              <h3 className="mt-2 font-display text-xl text-vellum">{quest.title}</h3>
               <p className="mt-2 min-h-14 text-sm leading-6 text-parchment/70">{quest.body}</p>
               <p className="mt-4 text-sm font-bold text-citrine">{quest.reward}</p>
             </article>
@@ -239,16 +255,12 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="border-y border-vellum/10 py-20">
+      <section id="philosophy" className="border-y border-vellum/10 py-28">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-bold uppercase text-ember">Philosophy</p>
-          <h2 className="mt-3 font-display text-4xl text-vellum sm:text-5xl">The final boss isn't your to-do list.</h2>
-          <p className="mt-5 text-lg leading-8 text-parchment/75">
+          <p className="eyebrow">Philosophy</p>
+          <h2 className="mt-5 font-display text-5xl leading-[1.05] text-vellum sm:text-6xl lg:text-7xl">The final boss isn't your to-do list.</h2>
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-parchment/75">
             It is inconsistency. Procrastination. Losing sight of how far you have come.
-          </p>
-          <p className="mt-4 text-lg leading-8 text-parchment/75">
-            Life RPG gives everyday effort a sense of momentum. Small actions earn experience. Consistency builds
-            attributes. Difficult goals become quests you can approach one step at a time.
           </p>
           <p className="mt-8 font-display text-2xl text-vellum">
             You do not become your ideal character by selecting them.
@@ -267,7 +279,7 @@ export function LandingPage() {
 
         <div className="grid gap-3">
           {madeFor.map((line) => (
-            <p key={line} className="rounded-lg border border-vellum/10 bg-coal/70 px-5 py-4 text-parchment/80">
+            <p key={line} className="border-l-2 border-ember bg-coal/70 px-5 py-4 text-parchment/80">
               {line}
             </p>
           ))}
@@ -290,8 +302,8 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="py-24 text-center">
-        <p className="text-sm font-bold uppercase text-ember">Final call</p>
+      <section className="panel my-16 border-ember/35 px-5 py-20 text-center sm:px-10">
+        <p className="eyebrow">Final call</p>
         <h2 className="mx-auto mt-3 max-w-4xl font-display text-5xl leading-tight text-vellum sm:text-6xl">
           Your next quest is waiting.
         </h2>
@@ -303,6 +315,10 @@ export function LandingPage() {
         </div>
         <p className="mt-4 text-sm text-parchment/55">Create your character. Choose your quests. Start at Level 1.</p>
       </section>
+      <footer className="flex flex-col gap-3 border-t border-vellum/10 py-8 text-xs text-parchment/55 sm:flex-row sm:items-center sm:justify-between">
+        <span className="font-display text-base text-vellum">Life RPG</span>
+        <div className="flex gap-4"><a href="#how-it-works" className="hover:text-vellum">How it works</a><Link to="/auth" className="hover:text-vellum">Sign In</Link></div>
+      </footer>
     </PageContainer>
   );
 }
@@ -339,7 +355,8 @@ function PrimaryLink({ children }: { children: string }) {
   return (
     <Link
       to="/auth"
-      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ember px-4 py-2 text-sm font-bold text-ink shadow-lg shadow-black/20 transition hover:bg-[#e0ad58]"
+      className="hard-button"
+      aria-label="Create your Life RPG account"
     >
       {children}
       <ArrowRight className="h-5 w-5" aria-hidden="true" />

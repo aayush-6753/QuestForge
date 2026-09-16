@@ -88,11 +88,11 @@ export function QuestForm({
   }
 
   const inputClassName =
-    "min-h-12 rounded-md border border-vellum/15 bg-ink/70 px-3 text-base text-vellum focus:border-ember focus:outline-none focus:ring-2 focus:ring-ember/35";
+    "min-h-12 border border-vellum/15 bg-ink/70 px-3 text-base text-vellum focus:border-ember focus:outline-none focus:ring-2 focus:ring-ember/35";
 
   return (
     <form
-      className="border-y border-vellum/10 bg-ink/30 px-1 py-5"
+      className="border-y border-vellum/15 bg-ink/30 px-1 py-5"
       onSubmit={(event) => void handleSubmit(submit)(event)}
       noValidate
     >

@@ -13,7 +13,7 @@ const navItems = [
 export function MobileBottomNavigation() {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-vellum/10 bg-coal/95 px-2 pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 shadow-glow lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-vellum/15 bg-coal/95 px-2 pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 lg:hidden"
       aria-label="Mobile navigation"
     >
       {navItems.map((item) => (
@@ -23,8 +23,8 @@ export function MobileBottomNavigation() {
           end={item.end}
           className={({ isActive }) =>
             cn(
-              "grid min-h-14 place-items-center rounded-md text-xs font-semibold text-parchment/65 transition hover:bg-vellum/10 hover:text-vellum",
-              isActive && "text-vellum",
+              "grid min-h-14 place-items-center border-t-2 border-transparent text-xs font-semibold text-parchment/65 transition hover:bg-vellum/10 hover:text-vellum",
+              isActive && "border-ember text-vellum",
             )
           }
         >

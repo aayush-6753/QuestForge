@@ -78,18 +78,18 @@ export function DashboardPage() {
 
             {isEditingProfile ? <ProfileEditor profile={data.profile} onCancel={() => setIsEditingProfile(false)} /> : null}
 
-            <section className="grid gap-3 md:grid-cols-3">
-              <article className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
-                <p className="text-xs font-bold uppercase text-ember">Timezone</p>
+            <section className="grid gap-3 md:grid-cols-3" aria-label="Character record">
+              <article className="panel-soft border-l-2 border-l-sapphire p-5">
+                <p className="eyebrow">Timezone</p>
                 <p className="mt-2 text-lg font-semibold text-vellum">{data.profile.timezone}</p>
               </article>
-              <article className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
-                <p className="text-xs font-bold uppercase text-ember">Total XP</p>
-                <p className="mt-2 text-lg font-semibold text-vellum">{data.character.totalXp}</p>
+              <article className="panel-soft border-l-2 border-l-ember p-5">
+                <p className="eyebrow">Total XP</p>
+                <p className="mt-1 font-display text-3xl text-vellum">{data.character.totalXp}</p>
               </article>
-              <article className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
-                <p className="text-xs font-bold uppercase text-ember">Longest streak</p>
-                <p className="mt-2 text-lg font-semibold text-vellum">{data.character.longestStreak} days</p>
+              <article className="panel-soft border-l-2 border-l-ruby p-5">
+                <p className="eyebrow">Longest streak</p>
+                <p className="mt-1 font-display text-3xl text-vellum">{data.character.longestStreak}<span className="ml-1 text-base text-parchment/65">days</span></p>
               </article>
             </section>
           </>
@@ -100,8 +100,8 @@ export function DashboardPage() {
         ) : null}
 
         {section === "attributes" ? (
-          <section id="attributes" className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
-            <p className="text-sm font-bold uppercase text-ember">Attributes</p>
+          <section id="attributes" className="panel p-5">
+            <p className="eyebrow">Attributes</p>
             <h2 className="font-display text-2xl text-vellum">Character Growth</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {data.attributes.map((attribute) => (

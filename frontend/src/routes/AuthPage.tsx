@@ -75,12 +75,12 @@ export function AuthPage() {
 
   return (
     <PageContainer className="flex min-h-screen items-center justify-center py-10">
-      <section className="w-full max-w-md rounded-lg border border-vellum/10 bg-coal/90 p-5 shadow-glow sm:p-7">
+      <section className="panel w-full max-w-md p-5 sm:p-7">
         <Link to="/" className="font-display text-2xl text-vellum">
           Life RPG
         </Link>
         <div className="mt-6">
-          <p className="text-sm font-bold uppercase text-ember">{mode === "login" ? "Welcome back" : "Begin"}</p>
+          <p className="eyebrow">{mode === "login" ? "Welcome back" : "Begin"}</p>
           <h1 className="mt-1 font-display text-3xl text-vellum">
             {mode === "login" ? "Return to your journal" : "Create your adventurer"}
           </h1>
@@ -89,10 +89,10 @@ export function AuthPage() {
           </p>
         </div>
 
-        <div className="mt-6 grid grid-cols-2 rounded-md border border-vellum/10 bg-ink/70 p-1">
+        <div className="mt-6 grid grid-cols-2 border border-vellum/10 bg-ink/70 p-1">
           <button
             type="button"
-            className={`rounded px-3 py-2 text-sm font-bold transition ${
+            className={`px-3 py-2 text-sm font-bold transition ${
               mode === "login" ? "bg-ember text-ink" : "text-parchment/70 hover:text-vellum"
             }`}
             onClick={() => {
@@ -105,7 +105,7 @@ export function AuthPage() {
           </button>
           <button
             type="button"
-            className={`rounded px-3 py-2 text-sm font-bold transition ${
+            className={`px-3 py-2 text-sm font-bold transition ${
               mode === "signup" ? "bg-ember text-ink" : "text-parchment/70 hover:text-vellum"
             }`}
             onClick={() => {

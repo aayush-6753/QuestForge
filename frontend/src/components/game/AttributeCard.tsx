@@ -26,7 +26,7 @@ export function AttributeCard({
   progression?: ProgressionSummary;
 }) {
   return (
-    <article className={cn("rounded-lg border p-4", attributeStyles[attribute.type])}>
+    <article className={cn("border p-4", attributeStyles[attribute.type])}>
       <h3 className="font-display text-lg text-vellum">{labels[attribute.type]}</h3>
       <p className="mt-2 text-sm text-parchment/75">
         Level {progression?.level ?? attribute.level} - {attribute.xp} total XP

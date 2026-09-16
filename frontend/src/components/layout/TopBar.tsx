@@ -6,10 +6,10 @@ export function TopBar({ title = "Adventurer Dashboard" }: { title?: string }) {
   const { signOut, session } = useAuth();
 
   return (
-    <header className="sticky top-0 z-20 border-b border-vellum/10 bg-ink/80 backdrop-blur">
+    <header className="sticky top-0 z-20 border-b border-vellum/15 bg-ink/90 backdrop-blur">
       <div className="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div>
-          <p className="text-xs font-bold uppercase text-ember">Current chapter</p>
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-ember">Current chapter</p>
           <h1 className="font-display text-xl text-vellum">{title}</h1>
         </div>
         <div className="flex items-center gap-3">

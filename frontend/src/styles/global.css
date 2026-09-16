@@ -23,7 +23,7 @@ html {
   background:
     linear-gradient(rgba(22, 20, 18, 0.94), rgba(22, 20, 18, 0.9)),
     radial-gradient(circle at 20% 0%, rgba(213, 157, 67, 0.18), transparent 34%),
-    radial-gradient(circle at 80% 8%, rgba(77, 120, 183, 0.15), transparent 30%),
+    radial-gradient(circle at 80% 8%, rgba(77, 120, 183, 0.11), transparent 30%),
     #161412;
 }
 
@@ -37,11 +37,21 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.14;
+  opacity: 0.1;
   background-image:
     linear-gradient(90deg, rgba(251, 243, 220, 0.07) 1px, transparent 1px),
     linear-gradient(rgba(251, 243, 220, 0.05) 1px, transparent 1px);
   background-size: 44px 44px;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
 }
 
 button,
@@ -147,5 +157,28 @@ input {
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply border border-vellum/15 bg-coal/90;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.28);
+  }
+
+  .panel-soft {
+    @apply border border-vellum/10 bg-ink/50;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-ember;
+  }
+
+  .rule-title {
+    @apply border-l-2 border-ember pl-3;
+  }
+
+  .hard-button {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 border border-ember bg-ember px-4 py-2 text-sm font-bold text-ink transition hover:-translate-y-0.5 hover:shadow-[5px_5px_0_rgba(0,0,0,0.36)];
   }
 }

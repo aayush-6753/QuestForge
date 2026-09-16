@@ -19,7 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         ref={ref}
         id={inputId}
         className={cn(
-          "min-h-12 rounded-md border border-vellum/15 bg-ink/70 px-3 text-base text-vellum shadow-inner shadow-black/30 transition placeholder:text-parchment/40",
+          "min-h-12 border border-vellum/15 bg-ink/70 px-3 text-base text-vellum shadow-inner shadow-black/30 transition placeholder:text-parchment/40",
           "focus:border-ember focus:outline-none focus:ring-2 focus:ring-ember/35",
           error && "border-ruby focus:border-ruby focus:ring-ruby/30",
           className,

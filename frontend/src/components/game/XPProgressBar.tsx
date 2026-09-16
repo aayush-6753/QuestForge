@@ -10,7 +10,7 @@ export function XPProgressBar({ progression, label = "XP Progress" }: { progress
         </span>
       </div>
       <div
-        className="h-3 overflow-hidden rounded-full bg-ink/70"
+        className="h-3 overflow-hidden border border-vellum/15 bg-ink/70"
         role="progressbar"
         aria-label={label}
         aria-valuemin={0}
@@ -18,7 +18,7 @@ export function XPProgressBar({ progression, label = "XP Progress" }: { progress
         aria-valuenow={progression.xpWithinLevel}
       >
         <div
-          className="h-full rounded-full bg-gradient-to-r from-ember via-citrine to-emerald"
+          className="h-full bg-gradient-to-r from-ember via-citrine to-emerald"
           style={{ width: `${progression.percentage}%` }}
         />
       </div>

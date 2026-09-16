@@ -106,10 +106,10 @@ export function QuestBoard() {
   const questMutationPending = archiveQuest.isPending || completeQuest.isPending;
 
   return (
-    <section id="quests" className="min-w-0 border-y border-vellum/10 bg-coal/55 px-4 py-5 sm:px-5">
+    <section id="quests" className="panel min-w-0 px-4 py-5 sm:px-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-bold uppercase text-ember">Quest board</p>
+          <p className="eyebrow">Quest board</p>
           <h2 className="font-display text-2xl text-vellum">Your Objectives</h2>
         </div>
         <Button
@@ -128,7 +128,7 @@ export function QuestBoard() {
         </Button>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 border border-vellum/10 bg-ink/45 p-1" aria-label="Quest status">
+      <div className="mt-4 grid grid-cols-3 border border-vellum/15 bg-ink/45 p-1" aria-label="Quest status">
         {QUEST_STATUSES.map((option) => (
           <button
             key={option}
@@ -189,17 +189,17 @@ export function QuestBoard() {
         {quests.data?.length === 0 ? <EmptyQuestState status={status} /> : null}
 
         {quests.data?.length ? (
-          <div className="divide-y divide-vellum/10 border-y border-vellum/10">
+          <div className="divide-y divide-vellum/10 border-y border-vellum/15">
             {quests.data.map((quest) => (
-              <article key={quest.id} className="py-4">
+              <article key={quest.id} className="relative py-5 first:pt-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-bold uppercase">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold uppercase tracking-wider">
                       <span className={difficultyStyles[quest.difficulty]}>{enumLabel(quest.difficulty)}</span>
                       <span className="text-sapphire">{enumLabel(quest.category)}</span>
                       <span className="text-parchment/55">{enumLabel(quest.targetAttribute)}</span>
                     </div>
-                    <h3 className="mt-1 break-words font-display text-xl text-vellum">{quest.title}</h3>
+                    <h3 className="mt-2 break-words font-display text-2xl text-vellum">{quest.title}</h3>
                     {quest.description ? (
                       <p className="mt-1 whitespace-pre-wrap break-words text-sm leading-6 text-parchment/70">
                         {quest.description}
