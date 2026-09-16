@@ -74,25 +74,25 @@ export function RewardShop({ gold }: { gold: number }) {
   const pending = purchase.isPending || equipment.isPending;
 
   return (
-    <section id="shop" className="rounded-lg border border-vellum/10 bg-coal/80 p-5">
+    <section id="shop" className="panel p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex items-start gap-3">
           <Store className="mt-1 h-6 w-6 text-emerald" aria-hidden="true" />
           <div>
-            <p className="text-sm font-bold uppercase text-ember">Rewards</p>
+            <p className="eyebrow">Rewards</p>
             <h2 className="font-display text-2xl text-vellum">Guild Shop</h2>
           </div>
         </div>
-        <p className="text-sm font-bold text-ember">{gold} gold</p>
+        <p className="border border-ember/40 bg-ember/10 px-3 py-2 font-mono text-sm font-bold text-ember">{gold} gold</p>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 rounded-md border border-vellum/10 p-1" aria-label="Reward view">
+      <div className="mt-4 grid grid-cols-2 border border-vellum/15 p-1" aria-label="Reward view">
         {(["catalog", "inventory"] as const).map((option) => (
           <button
             key={option}
             type="button"
             className={cn(
-              "min-h-10 rounded px-3 text-sm font-semibold capitalize text-parchment/65 transition",
+              "min-h-10 px-3 text-sm font-semibold capitalize text-parchment/65 transition",
               view === option && "bg-ember text-ink",
             )}
             aria-pressed={view === option}

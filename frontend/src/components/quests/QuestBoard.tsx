@@ -189,15 +189,15 @@ export function QuestBoard() {
         {quests.data?.length === 0 ? <EmptyQuestState status={status} /> : null}
 
         {quests.data?.length ? (
-          <div className="divide-y divide-vellum/10 border-y border-vellum/15">
+          <div className="grid gap-4">
             {quests.data.map((quest) => (
-              <article key={quest.id} className="relative py-5 first:pt-4">
+              <article key={quest.id} className="panel relative p-4 sm:p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold uppercase tracking-wider">
                       <span className={difficultyStyles[quest.difficulty]}>{enumLabel(quest.difficulty)}</span>
                       <span className="text-sapphire">{enumLabel(quest.category)}</span>
-                      <span className="text-parchment/55">{enumLabel(quest.targetAttribute)}</span>
+                      <span className="border-l border-vellum/20 pl-3 text-parchment/55">{enumLabel(quest.targetAttribute)}</span>
                     </div>
                     <h3 className="mt-2 break-words font-display text-2xl text-vellum">{quest.title}</h3>
                     {quest.description ? (
@@ -246,7 +246,7 @@ export function QuestBoard() {
                   ) : null}
                 </div>
 
-                <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-parchment/70">
+                <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-vellum/15 pt-3 text-sm text-parchment/70">
                   <span className="inline-flex items-center gap-1.5">
                     <Sparkles className="h-4 w-4 text-ember" aria-hidden="true" />
                     {quest.baseXp} XP

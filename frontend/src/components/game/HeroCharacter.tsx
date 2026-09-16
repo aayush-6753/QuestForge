@@ -25,7 +25,7 @@ export function HeroCharacter() {
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-[1.1fr_.9fr]">
           <div className="border border-vellum/10 bg-ink/60 p-4">
-            <div className="flex items-center justify-between gap-3"><p className="eyebrow">Current quest</p><span className="border border-emerald/40 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald">Active</span></div>
+            <div className="flex items-center justify-between gap-3"><p className="eyebrow">Current quest</p><span className="border border-system/50 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-system">Active</span></div>
             <p className="mt-3 font-display text-xl leading-snug text-vellum">Complete 5 workouts this week</p>
             <div className="mt-4 h-2 bg-vellum/10"><motion.div className="h-full bg-ember" initial={reduceMotion ? false : { width: 0 }} animate={{ width: "60%" }} transition={{ duration: 0.7, delay: 0.35 }} /></div>
             <p className="mt-2 text-xs text-parchment/60">3 of 5 complete</p>

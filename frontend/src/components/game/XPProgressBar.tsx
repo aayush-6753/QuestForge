@@ -18,7 +18,7 @@ export function XPProgressBar({ progression, label = "XP Progress" }: { progress
         aria-valuenow={progression.xpWithinLevel}
       >
         <div
-          className="h-full bg-gradient-to-r from-ember via-citrine to-emerald"
+          className="h-full bg-ember"
           style={{ width: `${progression.percentage}%` }}
         />
       </div>

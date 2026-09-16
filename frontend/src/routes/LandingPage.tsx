@@ -255,7 +255,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section id="philosophy" className="border-y border-vellum/10 py-28">
+      <section id="philosophy" className="philosophy-section border-y py-28">
         <div className="mx-auto max-w-4xl text-center">
           <p className="eyebrow">Philosophy</p>
           <h2 className="mt-5 font-display text-5xl leading-[1.05] text-vellum sm:text-6xl lg:text-7xl">The final boss isn't your to-do list.</h2>
@@ -302,7 +302,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="panel my-16 border-ember/35 px-5 py-20 text-center sm:px-10">
+      <section className="cta-section panel my-16 px-5 py-20 text-center sm:px-10">
         <p className="eyebrow">Final call</p>
         <h2 className="mx-auto mt-3 max-w-4xl font-display text-5xl leading-tight text-vellum sm:text-6xl">
           Your next quest is waiting.

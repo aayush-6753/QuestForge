@@ -3,11 +3,11 @@ import { cn } from "../../lib/cn";
 import { XPProgressBar } from "./XPProgressBar";
 
 const attributeStyles: Record<CharacterAttribute["type"], string> = {
-  STRENGTH: "border-ruby/35 bg-ruby/10 text-ruby",
-  INTELLECT: "border-sapphire/35 bg-sapphire/10 text-sapphire",
-  DISCIPLINE: "border-citrine/35 bg-citrine/10 text-citrine",
-  CREATIVITY: "border-amethyst/35 bg-amethyst/10 text-amethyst",
-  VITALITY: "border-emerald/35 bg-emerald/10 text-emerald",
+  STRENGTH: "border-strength bg-ruby/10 text-ruby",
+  INTELLECT: "border-knowledge bg-sapphire/10 text-sapphire",
+  DISCIPLINE: "border-discipline bg-discipline-active/10 text-discipline-active",
+  CREATIVITY: "border-creativity bg-amethyst/10 text-amethyst",
+  VITALITY: "border-adventure bg-emerald/10 text-emerald",
 };
 
 const labels: Record<CharacterAttribute["type"], string> = {

@@ -12,8 +12,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   ref,
 ) {
   const styles = {
-    primary: "border border-ember bg-ember text-ink shadow-[4px_4px_0_rgba(0,0,0,0.34)] hover:-translate-y-0.5 hover:bg-[#e0ad58] hover:shadow-[6px_6px_0_rgba(0,0,0,0.34)]",
-    secondary: "border border-ember/55 bg-vellum/10 text-vellum hover:-translate-y-0.5 hover:bg-vellum/15",
+    primary: "hard-button",
+    secondary: "border-2 border-ember/55 bg-vellum/10 text-vellum hover:bg-vellum/15",
     ghost: "text-parchment hover:bg-vellum/10",
   };
 
